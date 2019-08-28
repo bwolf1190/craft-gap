@@ -1,0 +1,73 @@
+								<div class="smart-wrap">
+									<div class="smart-forms smart-container wrap-1">
+										<div class="form-body smart-steps steps-theme-green theme-green">
+											<div class="frm-row">
+												<div class="colm colm12">
+													{% set form = craft.freeform.form("generalContact") %}
+											
+													{{ form.renderTag({
+														id: "contact-form",
+														class: "clearfix",
+														returnUrl: "/thank-you/"
+													}) }}
+														
+														<div class="content clearfix">
+															<div class="spacer-t0 spacer-b30">
+																<div class="tagline"><span>General Inquiry</span></div>
+															</div>
+															<div class="section">
+																<p class="fine-grey">Please let us know how we can help you with the form below. </p>
+															</div>
+															<div class="frm-row">
+																<div class="section colm colm12">
+																	<label class="field prepend-icon">
+																		<input type="text" name="generalName" id="generalName" class="gui-input" placeholder="Your Name">
+																		<span class="field-icon"><i class="fa fa-user"></i></span>  
+																	</label>
+																</div>
+															</div>
+															<div class="frm-row">
+																<div class="section colm colm12">
+																	<label class="field prepend-icon">
+																		<input type="email" name="generalEmail" id="generalEmail" class="gui-input" placeholder="Email Address">
+																		<span class="field-icon"><i class="fa fa-envelope"></i></span>  
+																	</label>
+																</div>
+															</div>
+															<div class="frm-row">
+																<div class="section colm colm12">
+																	<label class="field prepend-icon">
+																		<input type="text" name="generalPhone" id="generalPhone" class="gui-input" placeholder="Phone Number">
+																		<span class="field-icon"><i class="fa fa-phone"></i></span>  
+																	</label>
+																</div>
+															</div>
+															<div class="frm-row">
+																<div class="section colm colm12">
+																	<label class="field prepend-icon">
+																		<textarea class="gui-textarea" id="generalInquiry" name="generalInquiry" placeholder="Inquiry"></textarea>
+																		<span class="field-icon"><i class="fa fa-comments"></i></span>
+																		<span class="input-hint"> <strong>Hint:</strong> Please enter between 30 - 300 characters.</span>   
+																	</label>
+																</div>
+															</div>
+															<div class="frm-row">
+																<div class="section colm colm12">
+																	<label class="switch switch-round switch-green">
+																		<input type="checkbox" name="newsletter" id="newsletter" checked="">
+																		<span class="switch-label" data-on="YES" data-off="NO"></span>
+																		<span> Subscribe to Great American Power news, updates, and offers?</span>
+																	</label>
+																</div>
+															</div>
+														</div>
+														
+														<div class="actions align-right clearfix" style="display: block;">
+															<button type="submit" class="button btn-green">Submit</button>
+														</div>
+													{{ form.renderClosingTag }}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>	

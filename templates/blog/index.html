@@ -1,0 +1,81 @@
+{% extends "_layout" %}
+
+{% block meta %}
+	{% set seoGo = craft.entries.section('blogHome').id('2860').one() %}
+	{% set seo = seoGo.seo %}
+	{% hook 'seo' %}
+{% endblock %}
+
+{% block inline_css %}
+{% endblock %}
+
+{% block layout %}
+blog
+{% endblock %}
+
+{% block header %}	
+	{% include '_includes/_header' %}
+{% endblock %}
+
+{% block content %}
+	<div class="innerbanner" style="background-image:linear-gradient(to bottom,transparent,#fff),url(/assets/images/mast/bigstock-200537257-crop.jpg); width: 100%; background-position: center top; background-size: 100%; background-repeat:no-repeat; position: absolute;"></div>
+	
+	<div id="content" class="site-content">
+		<main id="primary" class="content-area" role="main" style="background:none;">
+			<article id="post" class="post page type-page status-publish hentry" style="padding-top: 46px; ">
+				<div>
+					<header style="margin:0 auto; width 100%; text-align:center; padding:0 0 3em 0; ">
+						<h1 class="entry-title ">Blog</h1>
+					</header>
+				</div>
+			</article>
+			
+			<div id="posts " class="posts ">
+				<div class="blog-ent "></div>
+				
+				{% set blog = craft.entries()
+					.section('blog')
+					.limit(8)
+				%}
+				
+				{% set entries = blog.all() %}
+				
+				{% for entry in entries %}
+				<article class="post type-post status-publish format-standard hentry category-gap too-short">
+					<div class="entry-media "></div>
+					<div class="entry-inner ">
+						<div class="entry-inner-content ">
+							<header class="entry-header ">
+								<h2 class="entry-title ">
+									<a href="/blog/{{ entry.postDate | date("Y") }}/{{ entry.postDate | date("m") }}/{{ entry.slug }}" rel="bookmark ">{{ entry.title }}</a>
+								</h2>
+							</header>
+
+							<div class="entry-content ">
+								<p>{{ entry.blogBody| chop(limit=20, unit='w') ~ '...' }}</p>
+								
+								<div class="link-more ">
+									<a href="/blog/{{ entry.postDate | date("Y") }}/{{ entry.postDate | date("m") }}/{{ entry.slug }}">Read More</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<a class="cover-link " href="/blog/{{ entry.postDate | date("Y") }}/{{ entry.postDate | date("m") }}/{{ entry.slug }}"></a>
+				</article>
+				{% endfor %}
+			</div>
+		</main>
+	</div>
+{% endblock %}
+
+{% block footer %}
+	{% include '_includes/_footer' %}
+{% endblock %}
+
+{% block scripts_includes %}
+	<!-- JS -->
+{% endblock %}
+
+{% block inline_scripts %}
+	{% include '_forms/_zipScriptFilter' %}
+{% endblock %}

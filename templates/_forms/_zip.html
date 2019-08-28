@@ -1,0 +1,57 @@
+
+											<form method="post" action="/enroll/residential-select-plan/" id="enrollZip">
+												
+												{{ csrfInput() }}
+												<input type="hidden" id="city" name="city" value="">
+												<input type="hidden" id="state" name="state" value="">
+												<input type="hidden" id="utility_type" name="utility_type" value="E">
+												<input type="hidden" id="referral_id" name="referral_id" value="{{ referral_id }}">
+												
+												<div class="form-body">
+													<div class="frm-row">
+														<div class="colm colm12">
+															{% if craft.app.request.segments|last == "start" %}
+															{% if errorGo == "zip" %}
+															<div class="section">
+																<div id="plan_alert" class="notification alert-error spacer-t10">
+																	<p style="padding-bottom:0;">The zip code you entered is not currently serviced by Great American Power. If you believe this is a mistake, please try again or try another zip code. </p>
+																</div>
+															</div>
+															{% endif %}
+															{% endif %}
+
+															<div class="spacer-t30 spacer-b30">
+																<div class="tagline"><span> Enter Your Zip Code to Get Started </span></div>
+															</div>
+															
+															<div class="section align-left">
+																<label id="zipbox" class="field">
+																	<input type="text" name="zip" id="zip" class="form-control gui-input"
+																		data-rule-required="true" 
+																		data-msg-required="Please enter a US zip code." 
+																		data-rule-zipcodeUS="true" 
+                                										data-msg-zipcodeUS="Please enter a valid US zip code."
+																		placeholder="Zip Code">
+																</label>
+															</div>
+
+															<div class="section align-left">
+																<label class="field select">
+																	<select id="rev_type" name="rev_type"
+																		data-rule-required="true" 
+																		data-msg-required="Please select a service type.">
+																		<option value="">Service Type</option>
+																		<option value="R">Residential</option>
+																		<option value="C">Commercial</option>
+																	</select>
+																	<i class="arrow double"></i>                    
+																</label>  
+															</div>
+															
+															<div class="section">
+																<button type="submit" class="button block full-width btn-green"> View Plans </button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>

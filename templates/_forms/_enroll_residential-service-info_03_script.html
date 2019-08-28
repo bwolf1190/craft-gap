@@ -1,0 +1,82 @@
+	<script type="text/javascript">
+		
+		jQuery(document).ready(function($){
+			
+			$("#service-info").validate({
+				errorClass: "state-error",
+				validClass: "state-success",
+				errorElement: "em",
+				onkeyup: false,
+				onclick: false,
+				rules: {
+					eu_acct_no: {
+						required: true
+					},
+					street_addr: {
+						required: true
+					},
+					city: {
+						required: true
+					},
+					state_abbr: {
+						required: true
+					},
+					postal: {
+						required: true,
+						number: true
+					},
+					main_phone: {
+						required: true,
+						number: true
+					},	
+					cell_phone: {
+						required: false,
+						number: true
+					}				
+				},
+				messages: {
+					eu_acct_no: {
+						required: "Please enter Current Electricity Provider Account Number"
+					},
+					street_addr: {
+						required: "Please enter service Street Address "
+					},
+					city: {
+						required: 'Please enter City'
+					},
+					state_abbr: {
+						required: 'Please enter State'
+					},
+					postal: {
+						required: 'Please enter Zip Code',
+						number: 'Please enter numbers only'
+					},
+					main_phone: {
+						required: 'Please enter Main Phone',
+						number: 'Please enter numbers only'
+					},
+					cell_phone: {
+						number: 'Please enter numbers only'
+					}					
+				},
+				highlight: function(element, errorClass, validClass) {
+					$(element).closest('.field').addClass(errorClass).removeClass(validClass);
+				},
+				unhighlight: function(element, errorClass, validClass) {
+					$(element).closest('.field').removeClass(errorClass).addClass(validClass);
+				},
+				errorPlacement: function(error, element) {
+					if (element.is(":radio") || element.is(":checkbox")) {
+						element.closest('.option-group').after(error);
+					} else {
+						error.insertAfter(element.parent());
+					}
+				}
+			
+			});
+			
+			$(".billEx").colorbox({rel:'billEx', transition:"fade", height:"70%"});
+			//$(".termsEx").colorbox({iframe:true, transition:"fade", height:"70%"});
+			
+		}); 
+    </script>   

@@ -1,0 +1,291 @@
+										<div class="form-body smart-steps steps-theme-green">
+											<div class="frm-row">
+												<div class="colm colm9">
+													<form method="post" action="/enroll/thanks/" id="smart-form">
+														
+														{{ csrfInput() }}
+														
+														<input type="hidden" id="eai_trnno" name="eai_trnno" value="{{ randomEai }}">
+														<input type="hidden" id="supno" name="supno" value="">
+														<input type="hidden" id="price_code" name="price_code" value="">
+														<input type="hidden" id="rev_type" name="rev_type" value="">
+														<input type="hidden" id="campaign_code" name="campaign_code" value="">
+														<input type="hidden" id="referral_id" name="referral_id" value="">
+														<input type="hidden" id="response_ind" name="response_ind" value="">
+														
+														<h2>Select a Plan</h2>
+														<fieldset>                   
+															<div class="spacer-t30 spacer-b30">
+																<div class="tagline"><span>Select a Plan</span></div>
+															</div>
+															<div class="section">
+																<p class="fine-grey">Please select a service plan in your area. </p>
+															</div>
+															<div class="frm-row">	
+																
+																{% for node in quoteFeed %}
+																{% if 'WEB' in node.campaign_code %}
+																
+																{% if node.green_percent == '100.00' %}
+																	{% set genGo = '100% Green Electricity' %}
+																{% else %}
+																	{% set genGo = 'Traditionally Sourced Electricity' %}
+																{% endif %}
+																
+																{% if '36 mo' in node.price_desc %}
+																	{% set rateGo = '36 Months Fixed Rate' %}
+																{% elseif '24 mo' in node.price_desc %}
+																	{% set rateGo = '24 Months Fixed Rate' %}
+																{% elseif '12 mo' in node.price_desc %}
+																	{% set rateGo = '12 Months Fixed Rate' %}
+																{% elseif '6 mo' in node.price_desc %}
+																	{% set rateGo = '6 Months Fixed Rate' %}
+																{% elseif '1 mo' in node.price_desc %}
+																	{% set rateGo = '1 Month Variable Rate' %}
+																{% else %}
+																	{% set rateGo = 'Call for Details' %}
+																{% endif %}
+																
+																{% if '$50' in node.price_desc %}
+																	{% set rewardGo = '$50/mo Shopping, Dining Rewards' %}
+																{% else %}
+																	{% set rewardGo = 'No Added Rewards' %}
+																{% endif %}
+																
+																{% if node.early_term_amt == '0.00' %}
+																	{% set earlyGo = 'No Early Exit Penalties' %}
+																{% else %}
+																	{% set earlyGo = '$' ~ node.early_term_amt ~ ' Early Exit Fee' %}
+																{% endif %}
+																
+																<div class="colm colm4">
+																	<div class="section">
+																		<div class="price-box">
+																			{% if node.green_percent == '100.00' %}
+																			<div class="ribbon">
+																				<div class="ribbon-inner"><i class="fa fa-leaf"></i></div>
+																			</div>
+																			{% endif %}
+																			<h2 style="text-transform: none;"> ${{ node.offer_price|number_format(4, '.') }} / kWh </h2>
+																			{#<!--<h4>{{ node.offer_desc }}</h4>-->#}
+																			{#<!--<h5 style="text-transform: none;"> ${{ node.offer_price|number_format(4, '.') }} / kWh </h5>-->#}
+																			<div class="plan_provider">
+																				<img src="/assets/images/providers/{{ node.supplier }}.png"/>
+																			</div>
+																			<div class="spacer spacer-t20 spacer-b10"></div>
+																			<p><i class="fas fa-bolt fa-lg"></i> {{ genGo }}</p>
+																			<div class="spacer spacer-t10 spacer-b10"></div>
+																			<p><i class="fas fa-chart-bar fa-lg"></i> {{ rateGo }}</p>
+																			<div class="spacer spacer-t10 spacer-b10"></div>
+																			<p><i class="fas fa-shopping-bag fa-lg"></i> {{ rewardGo }}</p>
+																			<div class="spacer spacer-t10 spacer-b10"></div>
+																			<p><i class="fas fa-door-open fa-lg"></i> {{ earlyGo }}</p>
+																			<div class="spacer spacer-t10 spacer-b20"></div>
+																			<a href="#" class="button block pushed expand offer_go" data-supno="{{ node.supplier }}" data-revtype="{{ node.rev_type }}" data-campaign="{{ node.campaign_code }}" data-desc="{{ node.offer_desc }}" data-pricec="{{ node.price_code }}" data-pricekw="{{ node.offer_price|number_format(4, '.') }}" data-green="{{ node.green_percent }}" data-gen="{{ genGo }}" data-rate="{{ rateGo }}" data-rewards="{{ rewardGo }}" data-early="{{ earlyGo }}"> Select Plan </a>
+																		</div>
+																	</div>
+																</div>
+																{% endif %}
+																{% endfor %}
+															</div> 
+														</fieldset>
+
+														<h2>Contact Info</h2>
+														<fieldset>
+															<div class="spacer-t30 spacer-b30">
+																<div class="tagline"><span>Contact Information</span></div>
+															</div>
+															<div class="section">
+																<p class="fine-grey">Please enter your current contact information. </p>
+															</div>
+															<div class="frm-row">
+																<div class="section colm colm12">
+																	<label class="field prepend-icon">
+																		<input type="text" name="first_name" id="first_name" class="gui-input" placeholder="First Name">
+																		<span class="field-icon"><i class="fa fa-user"></i></span>  
+																	</label>
+																</div>
+															</div>
+															<div class="frm-row">
+																<div class="section colm colm12">
+																	<label class="field prepend-icon">
+																		<input type="text" name="last_name" id="last_name" class="gui-input" placeholder="Last Name">
+																		<span class="field-icon"><i class="fa fa-user"></i></span>  
+																	</label>
+																</div>
+															</div>
+															<div class="frm-row">
+																<div class="section colm colm12">
+																	<label class="field prepend-icon">
+																		<input type="email" name="email" id="email" class="gui-input" placeholder="Email Address">
+																		<span class="field-icon"><i class="fa fa-envelope"></i></span>  
+																	</label>
+																</div>
+															</div>
+															<div class="frm-row">
+																<div class="section colm colm12">
+																	<label class="field prepend-icon">
+																		<input type="tel" name="main_phone" id="main_phone" class="gui-input" placeholder="Main Phone">
+																		<span class="field-icon"><i class="fa fa-phone"></i></span>  
+																	</label>
+																</div>
+															</div>
+															<div class="frm-row">
+																<div class="section colm colm12">
+																	<label class="field prepend-icon">
+																		<input type="tel" name="cell_phone" id="cell_phone" class="gui-input" placeholder="Mobile Phone">
+																		<span class="field-icon"><i class="fa fa-mobile-alt"></i></span>  
+																	</label>
+																</div>
+															</div>
+														</fieldset>
+
+														<h2>Service Info</h2>
+														<fieldset>
+															<div class="spacer-t30 spacer-b30">
+																<div class="tagline"><span>Service Location Details</span></div>
+															</div>
+															
+															<div class="frm-row">
+																<div class="section colm colm8">
+																	<div class="section">
+																		<p class="fine-grey">Please enter service location information. </p>
+																	</div>
+																	
+																	<div class="frm-row">
+																		<div class="section colm colm12">
+																			<label class="field prepend-icon">
+																				<input type="text" name="eu_acct_no" id="eu_acct_no" class="gui-input" placeholder="Account Number">
+																				<span class="field-icon"><i class="fa fa-file-invoice"></i></span>  
+																			</label>
+																		</div>
+																	</div>
+																	{#<!--<div class="frm-row">
+																		<div class="section colm colm6">
+																			<label class="field prepend-icon">
+																				<input type="text" name="gu_acct_no" id="gu_acct_no" class="gui-input" placeholder="Account Number">
+																				<span class="field-icon"><i class="fa fa-user"></i></span>  
+																			</label>
+																		</div>
+																	</div>-->#}
+																	
+																	<div class="frm-row">
+																		<div class="section colm colm6">
+																			<label class="field prepend-icon">
+																				<input type="text" name="street_addr" id="street_addr" class="gui-input" placeholder="Service Address 1">
+																				<span class="field-icon"><i class="fa fa-map-marker"></i></span>  
+																			</label>
+																		</div>
+																		<div class="section colm colm6">
+																			<label class="field prepend-icon">
+																				<input type="text" name="street_addr2" id="street_addr2" class="gui-input" placeholder="Service Address 2">
+																				<span class="field-icon"><i class="fa fa-map-marker"></i></span>  
+																			</label>
+																		</div>
+																	</div>
+																	<div class="frm-row">
+																		<div class="section colm colm6">
+																			<label class="field prepend-icon">
+																				<input type="text" name="city" id="city" class="gui-input" placeholder="City" value="{{cityGo}}">
+																				<span class="field-icon"><i class="fa fa-city"></i></span>  
+																			</label>
+																		</div>
+																		<div class="section colm colm6">
+																			<label class="field prepend-icon">
+																				<input type="text" name="state_abbr" id="state_abbr" class="gui-input" placeholder="State" value="{{stateGo}}">
+																				<span class="field-icon"><i class="fa fa-globe-americas"></i></span>  
+																			</label>
+																		</div>
+																	</div>
+																	<div class="frm-row">
+																		<div class="section colm colm6">
+																			<label class="field prepend-icon">
+																				<input type="text" name="postal" id="postal" class="gui-input" placeholder="Zip Code" value="{{zipGo}}">
+																				<span class="field-icon"><i class="fa fa-map"></i></span>  
+																			</label>
+																		</div>
+																	</div>
+																</div>
+																<div class="section colm colm4">
+																	<div class="notification alert-info spacer-b10">
+																		<p style="padding-bottom:0;">How to find account number?</p>
+																	</div>
+
+																	<div style="border: 1px solid #ECEDEE; padding:20px;">
+																		<a id="billExGo" href="/assets/images/statements/BGE.jpg" class="billEx">
+																			<img id="billExV" src="/assets/images/statements/BGE.jpg">
+																		</a>
+																	</div>
+																	
+																	<p class="fine-grey spacer-t10">Click example statement above to enlarge.</p>
+																</div>
+															</div>
+														</fieldset>
+
+														<h2>Complete</h2>
+														<fieldset>
+															<div class="spacer-t30 spacer-b30">
+																<div class="tagline"><span>Confirm &amp; Complete</span></div>
+															</div>
+															<div class="section">
+																<div class="notification alert-info">
+																	<p style="padding-bottom:0;">Please re-verify your information and agree to terms.</p>
+																</div>
+															</div>
+															<div class="section">
+																<div class="option-group field">
+																	<label class="option">
+																		<input type="checkbox" name="generalTerms" value="General Terms">
+																		<span class="checkbox"></span> 
+																		Please <a href="https://www.greatamericanpower.com/pdf/disclosure-statements/Great-American-Power-Disclosure-Statement-ComEd.pdf?v=1" target="_blank"> read and agree </a> to our the terms                
+																	</label>
+																</div>
+															</div>
+															<div class="section">
+																<div class="option-group field">
+																	<label class="option">
+																		<input type="checkbox" name="newsletter" value="Newsletter" checked>
+																		<span class="checkbox"></span> 
+																		I would like to receive Great American Power offers and news.                
+																	</label>
+																</div>
+															</div>
+															<div class="result"></div>
+														</fieldset>
+													</form>
+												</div>
+												<div class="colm colm3">
+													<div class="frm-row">
+														<div class="colm colm12">
+															<h3 class="plan_guide">Your Selected Plan:</h3>
+															<div class="section">
+																<div id="plan_alert" class="notification alert-info spacer-t10">
+																	<p style="padding-bottom:0;">Please select a service plan. </p>
+																</div>
+																<div id="plan_go" class="price-box" style="display: none;">                                
+																	<div id="plan_goGreen" class="ribbon" style="display:none;">
+																		<div class="ribbon-inner"><i class="fa fa-leaf"></i></div>
+																	</div>
+																	<h2 style="text-transform: none;">$<span id="plan_goPrice"></span> / kWh</h2>
+																	<div class="plan_provider">
+																		<img id="plan_goSup" src="/assets/images/providers/default.png"/>
+																	</div>
+																	{#<!--<h5 id="plan_goTitle"></h5>-->#}
+																	{#<!--<h5 style="text-transform: none;">$<span id="plan_goPrice"></span> / kWh</h5>-->#}
+																	<div class="spacer spacer-t20 spacer-b10"></div>
+																	<p class=""><i class="fas fa-bolt fa-lg"></i> <span id="plan_goGen"></span></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-chart-bar fa-lg"></i> <span id="plan_goRate"></span></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-shopping-bag fa-lg"></i> <span id="plan_goReward"></span></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-door-open fa-lg"></i> <span id="plan_goEarly"></span></p>
+																</div>
+															</div>
+															
+															<div id="target"></div>
+														</div>
+													</div> 
+												</div>
+											</div>
+										</div>	

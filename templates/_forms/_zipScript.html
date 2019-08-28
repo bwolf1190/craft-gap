@@ -1,0 +1,59 @@
+	<script>
+		jQuery(function() {			
+			jQuery("#zip").mask('99999', {placeholder:'X'});
+			
+			jQuery("#zip").keyup(function() {
+				var zip_in = jQuery(this);
+				var zip_box = jQuery('#zipbox');
+				
+				if (zip_in.val().length<5)
+				{
+					zip_box.removeClass('state-error state-success');
+				}
+				else if ( zip_in.val().length>5)
+				{
+					zip_box.addClass('state-error').removeClass('state-success');
+				}
+				else if ((zip_in.val().length == 5) ) 
+				{
+					// Make HTTP Request
+					jQuery.ajax({
+						url: 		"https://api.zippopotam.us/us/" + zip_in.val(),
+						cache: 		false,
+						dataType: 	"json",
+						type: 		"GET",
+					  	success: 	function(result, success) {
+							places = result['places'][0];
+							jQuery("#city").val(places['place name']);
+							jQuery("#state").val(places['state abbreviation']);
+							zip_box.addClass('state-success').removeClass('state-error');
+							//getQuotes();
+						},
+						error: function(result, success) {
+							zip_box.removeClass('state-success').addClass('state-error');
+						}
+					});
+				}
+			});
+			
+			jQuery( "#enrollZip" ).validate({
+            	errorClass: "state-error",
+                validClass: "state-success",
+                errorElement: "em",
+                highlight: function(element, errorClass, validClass) {
+                	jQuery(element).closest('.field').addClass(errorClass).removeClass(validClass);
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                	jQuery(element).closest('.field').removeClass(errorClass).addClass(validClass);
+                },
+                errorPlacement: function(error, element) {
+                	if (element.is(":radio") || element.is(":checkbox")) {
+                   		element.closest('.option-group').after(error);
+                    } else {
+                    	error.insertAfter(element.parent());
+                    }
+            	}	
+            });	
+
+		});
+	</script>

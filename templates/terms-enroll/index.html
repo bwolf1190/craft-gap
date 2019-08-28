@@ -1,0 +1,11 @@
+<div id="getTerms"></div>
+
+<script src="/assets/js/pdf/pdfobject.min.js"></script>
+<script>PDFObject.embed("/pdf/disclosure-statements/Great-American-Power-Disclosure-Statement-ComEd.pdf", "#getTerms");</script>
+
+<script type="text/javascript">
+	jQuery(document).bind('cbox_complete', function(){
+  		var cboxHeight = jQuery("#cboxLoadedContent").height();
+		jQuery('.pdfobject').css("height", cboxHeight - 36);
+	});
+</script>

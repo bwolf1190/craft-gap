@@ -1,0 +1,189 @@
+										<div class="form-body smart-steps steps-theme-green theme-green">
+											<div class="frm-row">
+												<div class="colm colm9">
+													<form method="post" action="/enroll/residential-contact-info/" id="select-plan" class="wizard clearfix">
+													
+														{{ csrfInput() }}
+														
+														<div class="steps clearfix">
+															<ul role="tablist">
+																<li role="tab" class="first current" aria-disabled="false" aria-selected="true">
+																	<a id="smart-form-t-0" href="#smart-form-h-0" aria-controls="smart-form-p-0">
+																		<span class="current-info audible">current step: </span><span class="number">1.</span> Select a Plan
+																	</a>
+																</li>
+																<li role="tab" class="disabled" aria-disabled="true" aria-selected="false">
+																	<a id="smart-form-t-1" href="#smart-form-h-1" aria-controls="smart-form-p-1">
+																		<span class="number">2.</span> Contact Info
+																	</a>
+																</li>
+																<li role="tab" class="disabled" aria-disabled="true" aria-selected="false">
+																	<a id="smart-form-t-2" href="#smart-form-h-2" aria-controls="smart-form-p-2">
+																		<span class="number">3.</span> Service Info
+																	</a>
+																</li>
+																<li role="tab" class="disabled last" aria-disabled="true" aria-selected="false">
+																	<a id="smart-form-t-3" href="#smart-form-h-3" aria-controls="smart-form-p-3">
+																		<span class="number">4.</span> Complete
+																	</a>
+																</li>
+															</ul>
+														</div>
+														
+														<div class="content clearfix">
+														
+															<input type="hidden" id="eai_trnno" name="eai_trnno" value="{{ randomEai }}">
+															<input type="hidden" id="city" name="city" value="{{ cityGo }}">
+															<input type="hidden" id="state_abbr" name="state_abbr" value="{{ stateGo }}">
+															<input type="hidden" id="postal" name="postal" value="{{ zipGo }}">
+															<input type="hidden" id="supno" name="supno" value="">
+															<input type="hidden" id="supname" name="supname" value="">
+															<input type="hidden" id="price_code" name="price_code" value="">
+															<input type="hidden" id="rev_type" name="rev_type" value="">
+															<input type="hidden" id="utility_type" name="utility_type" value="{{ utility_typeGo }}">
+															<input type="hidden" id="campaign_code" name="campaign_code" value="">
+															<input type="hidden" id="referral_id" name="referral_id" value="">
+															
+															<input type="hidden" id="offer" name="offer" value="">
+															<input type="hidden" id="pricekw" name="pricekw" value="">
+															<input type="hidden" id="green" name="green" value="">
+															<input type="hidden" id="gen" name="gen" value="">
+															<input type="hidden" id="rate" name="rate" value="">
+															<input type="hidden" id="rewards" name="rewards" value="">
+															<input type="hidden" id="early" name="early" value="">
+
+															<fieldset>                   
+																<div class="spacer-t30 spacer-b30">
+																	<div class="tagline"><span>Select a Plan</span></div>
+																</div>
+
+																<div class="section">
+																	<div class="notification alert-info spacer-t10">
+																		<p style="padding-bottom:0;">Please select a service plan in your area. </p>
+																	</div>
+																</div>
+																<div class="frm-row">	
+
+																	{% for node in quoteFeed %}
+																	{% if 'WEB' in node.campaign_code %}
+
+																	{% if node.green_percent == '100.00' %}
+																		{% set genGo = '100% Green Electricity' %}
+																	{% else %}
+																		{% set genGo = 'Traditionally Sourced Electricity' %}
+																	{% endif %}
+
+																	{% if '36 mo' in node.price_desc %}
+																		{% set rateGo = '36 Months Fixed Rate' %}
+																	{% elseif '24 mo' in node.price_desc %}
+																		{% set rateGo = '24 Months Fixed Rate' %}
+																	{% elseif '12 mo' in node.price_desc %}
+																		{% set rateGo = '12 Months Fixed Rate' %}
+																	{% elseif '6 mo' in node.price_desc %}
+																		{% set rateGo = '6 Months Fixed Rate' %}
+																	{% elseif '1 mo' in node.price_desc %}
+																		{% set rateGo = '1 Month Variable Rate' %}
+																	{% else %}
+																		{% set rateGo = 'Call for Details' %}
+																	{% endif %}
+
+																	{% if '$50' in node.price_desc %}
+																		{% set rewardGo = '$50/mo Shopping, Dining Rewards' %}
+																	{% else %}
+																		{% set rewardGo = 'No Added Rewards' %}
+																	{% endif %}
+
+																	{% if node.early_term_amt == '0.00' %}
+																		{% set earlyGo = 'No Early Exit Penalties' %}
+																	{% else %}
+																		{% set earlyGo = '$' ~ node.early_term_amt ~ ' Early Exit Fee' %}
+																	{% endif %}
+																	
+																	{% if supnoGo == node.supplier %}
+																	{% set sups = craft.entries.section('supplier').supplierCode(node.supplier).one() %}
+																	{% set supnoName = sups.supplierName %}
+																	
+																	<div class="colm colm4">
+																		<div class="section">
+																			<div class="price-box">
+																				{% if node.green_percent == '100.00' %}
+																				<div class="ribbon">
+																					<div class="ribbon-inner"><i class="fa fa-leaf"></i></div>
+																				</div>
+																				{% endif %}
+																				<h2 style="text-transform: none;"> ${{ node.offer_price|number_format(4, '.') }} / kWh </h2>
+																				{#<!--<h4>{{ node.offer_desc }}</h4>-->#}
+																				{#<!--<h5 style="text-transform: none;"> ${{ node.offer_price|number_format(4, '.') }} / kWh </h5>-->#}
+																				<div class="plan_provider">
+																					{#<!-- <img id="plan_goSup" src="/assets/images/providers/{{ node.supplier }}.png"/> -->#}
+																					<img src="/assets/images/providers/GAP.png"/>
+																				</div>
+																				<p class="spacer-t20 spacer-b10" style="font-size: 15px; color: #666;">{{ supnoName }}</p>
+																				<div class="spacer spacer-t10 spacer-b10"></div>
+																				<p><i class="fas fa-bolt fa-lg"></i> {{ genGo }}</p>
+																				<div class="spacer spacer-t10 spacer-b10"></div>
+																				<p><i class="fas fa-chart-bar fa-lg"></i> {{ rateGo }}</p>
+																				<div class="spacer spacer-t10 spacer-b10"></div>
+																				<p><i class="fas fa-shopping-bag fa-lg"></i> {{ rewardGo }}</p>
+																				<div class="spacer spacer-t10 spacer-b10"></div>
+																				<p><i class="fas fa-door-open fa-lg"></i> {{ earlyGo }}</p>
+																				<div class="spacer spacer-t10 spacer-b20"></div>
+																				<a href="#" class="button block pushed expand offer_go" data-supno="{{ node.supplier }}" data-supname="{{ supnoName }}" data-revtype="{{ node.rev_type }}" data-campaign="{{ node.campaign_code }}" data-desc="{{ node.offer_desc }}" data-pricec="{{ node.price_code }}" data-pricekw="{{ node.offer_price|number_format(4, '.') }}" data-green="{{ node.green_percent }}" data-gen="{{ genGo }}" data-rate="{{ rateGo }}" data-rewards="{{ rewardGo }}" data-early="{{ earlyGo }}"> Select Plan </a>
+																			</div>
+																		</div>
+																	</div>
+																	{% endif %}
+																	{% endif %}
+																	{% endfor %}
+																</div> 
+															</fieldset>
+														</div>
+														
+														<div class="actions clearfix" style="display: block;">
+															<ul role="menu" aria-label="Pagination">
+																<li aria-hidden="false" aria-disabled="false">
+																	<button type="submit" class="button planSelected btn-green">Save &amp; Continue</button>
+																</li>
+															</ul>
+														</div>
+													</form>
+													<div class="spacer-t40">
+														{{ entry.pagesMain }}
+													</div>
+												</div>
+												<div class="colm colm3">
+													<div class="frm-row">
+														<div class="colm colm12">
+															<h3 class="plan_guide">Your Selected Plan:</h3>
+															<div class="section">
+																<div id="plan_alert" class="notification alert-info spacer-t10">
+																	<p style="padding-bottom:0;">Please select a service plan. </p>
+																</div>
+																<div id="plan_go" class="price-box" style="display: none;">                                
+																	<div id="plan_goGreen" class="ribbon" style="display:none;">
+																		<div class="ribbon-inner"><i class="fa fa-leaf"></i></div>
+																	</div>
+																	<h2 style="text-transform: none;">$<span id="plan_goPrice"></span> / kWh</h2>
+																	<div class="plan_provider">
+																		<img id="plan_goSup" src="/assets/images/providers/default.png"/>
+																	</div>
+																	{#<!--<h5 id="plan_goTitle"></h5>-->#}
+																	{#<!--<h5 style="text-transform: none;">$<span id="plan_goPrice"></span> / kWh</h5>-->#}
+																	<p id="plan_supnameGo" class="spacer-t20 spacer-b10" style="font-size: 15px; color: #666;"></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-bolt fa-lg"></i> <span id="plan_goGen"></span></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-chart-bar fa-lg"></i> <span id="plan_goRate"></span></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-shopping-bag fa-lg"></i> <span id="plan_goReward"></span></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-door-open fa-lg"></i> <span id="plan_goEarly"></span></p>
+																</div>
+																
+																{% include '_includes/_sidebar-support' %}
+															</div>
+														</div>
+													</div> 
+												</div>
+											</div>
+										</div>	

@@ -1,0 +1,150 @@
+{% if craft.app.request.getBodyParam('eai_trnno') is defined %}
+{% set eaiGo = craft.app.request.getBodyParam('eai_trnno') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('city') is defined %}
+{% set cityGo = craft.app.request.getBodyParam('city') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('state_abbr') is defined %}
+{% set stateGo = craft.app.request.getBodyParam('state_abbr') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('postal') is defined %}
+{% set zipGo = craft.app.request.getBodyParam('postal') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('supno') is defined %}
+{% set supnoGo = craft.app.request.getBodyParam('supno') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('supname') is defined %}
+{% set supnameGo = craft.app.request.getBodyParam('supname') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('price_code') is defined %}
+{% set price_codeGo = craft.app.request.getBodyParam('price_code') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('price_code') is defined %}
+{% set price_codeGo = craft.app.request.getBodyParam('price_code') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('rev_type') is defined %}
+{% set rev_typeGo = craft.app.request.getBodyParam('rev_type') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('utility_type') is defined %}
+{% set utility_typeGo = craft.app.request.getBodyParam('utility_type') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('campaign_code') is defined %}
+{% set campaign_codeGo = craft.app.request.getBodyParam('campaign_code') %}
+{% endif %}
+
+{% if craft.app.request.getBodyParam('offer') is defined %}
+{% set offerGo = craft.app.request.getBodyParam('offer') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('pricekw') is defined %}
+{% set pricekwGo = craft.app.request.getBodyParam('pricekw') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('green') is defined %}
+{% set greenGo = craft.app.request.getBodyParam('green') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('gen') is defined %}
+{% set genGo = craft.app.request.getBodyParam('gen') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('rate') is defined %}
+{% set rateGo = craft.app.request.getBodyParam('rate') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('rewards') is defined %}
+{% set rewardsGo = craft.app.request.getBodyParam('rewards') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('early') is defined %}
+{% set earlyGo = craft.app.request.getBodyParam('early') %}
+{% endif %}
+
+{% if craft.request.getQueryParam('ref') is defined %}
+{% set referral_idGo = craft.request.getQueryParam('ref') %}
+{% else %}
+{% set referral_idGo = '' %}
+{% endif %}
+
+{% set randomGapU = [] %}
+{% set numbers = '0123456789' %}
+{% for i in 1..7 %}
+    {% set randomCharacter = random(numbers) %}
+    {% set randomGapU = randomGapU|merge([randomCharacter]) %}
+{% endfor %}
+{% set randomGapU = "GAPU" ~ randomGapU|join %}
+
+{% extends "_layout" %}
+
+{% block meta %}
+	{% set seoGo = craft.entries.section('enroll').id('2837').one() %}
+	{% set seo = seoGo.seo %}
+	{% hook 'seo' %}
+{% endblock %}
+
+{% block inline_css %}
+	<!-- INLINE CSS -->
+{% endblock %}
+
+{% block layout %}
+page-template-default page is-singular not-scrolled
+{% endblock %}
+
+{% block header %}	
+	{% include '_includes/_header' %}
+{% endblock %}
+
+{% block content %}
+	{% set entry = craft.entries.section('enroll').id('2837').one() %}
+	{% set mast = entry.pagesMast.one() %}
+	{% if mast %}
+	<div class="innerbanner" style="background-image:url({{ mast.url }});height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+	{% else %}
+	<div class="innerbanner" style="background-image:url(/assets/images/mast/bigstock-200537257-crop.jpg);height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+	{% endif %}
+		
+	<div id="content" class="site-content">
+		<main id="primary" class="content-area" role="main">
+			<article id="post-343771" class="post-343771 page type-page status-publish hentry">
+				<div class="entry-inner">
+					<header class="entry-header">
+						<h1 class="entry-title">{{ entry.pagesTitle }}</h1>
+					</header>
+					<div class="entry-content">
+
+						<div id="breadcrumbs">
+							<span xmlns:v="http://rdf.data-vocabulary.org/#">
+								<span typeof="v:Breadcrumb">
+									<a href="https://www.greatamericanpower.com/" rel="v:url" property="v:title">&nbsp;</a> › 
+									<span class="">Enroll</span> › 
+									<span class="breadcrumb_last">{{ entry.title }}</span>
+								</span>
+							</span>
+						</div>
+
+						<div id="custom_content">
+							<div class="col-md-12">
+								<div class="smart-wrap">
+									<div class="smart-forms smart-container wrap-1">
+										{% if price_codeGo == "" %}
+										{% redirect "/enroll/" %}
+										{% else %}
+										{% include '_forms/_enroll_residential-contact-info_02' %}
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+		</main>
+	</div>
+
+{% endblock %}
+
+{% block footer %}
+	{% include '_includes/_footer' %}
+{% endblock %}
+
+{% block scripts_includes %}
+	<!-- JS -->
+{% endblock %}
+
+{% block inline_scripts %}
+	{% include '_forms/_enroll_residential-contact-info_02_script' %}
+{% endblock %}

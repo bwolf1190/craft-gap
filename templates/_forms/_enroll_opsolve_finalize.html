@@ -1,0 +1,53 @@
+{% header "Content-Type: application/json; charset=utf-8" %}
+
+{% set submission = craft.freeform.submissions({
+	form: 'gapEnrollment',
+	token: craft.app.request.getSegment(3)
+}).one() %}
+
+{% set form = craft.freeform.form("gapEnrollment") %}
+
+{% set opSupno = submission.supno %}
+{% set opEuAcct = submission.eu_acct_no %}
+{% set opGuAcct = submission.gu_acct_no %}
+{% set opPriceCode = submission.price_code %}
+{% set opRev = submission.rev_type %}
+{% set opLastName = submission.last_name|url_encode %}
+{% set opFirstName = submission.first_name|url_encode %}
+{% set opPhone = submission.main_phone %}
+{% set opCell = submission.cell_phone %}
+{% set opEmail = submission.email %}
+{% set opStreet = submission.street_addr|url_encode %}
+{% set opStreet2 = submission.street_addr2|url_encode %}
+{% set opCity = submission.city|url_encode %}
+{% set opState = submission.state_abbr.value %}
+{% set opZip = submission.postal %}
+{% set opRef = submission.referral_id %}
+{% set opCamp = submission.campaign_code %}
+{% set opEai = submission.eai_trnno %}
+
+{#<!-- https://greatamericanpower.com/vendor/opsolve/lib/gap-to-ops.php?supno={{ opSupno }}&amp;eu_acct_no={{ opEuAcct }}&amp;gu_acct_no={{ opGuAcct }}&amp;price_code={{ opPriceCode }}&amp;rev_type={{ opRev }}&amp;last_name={{ opLastName }}&amp;first_name={{ opFirstName }}&amp;main_phone={{ opPhone }}&amp;cell_phone={{ opCell }}&amp;email={{ opEmail }}&amp;street_addr={{ opStreet }}&amp;street_addr2={{ opStreet2 }}&amp;city={{ opCity }}&amp;state_abbr={{ opState }}&amp;postal={{ opZip }}&amp;referral_id={{ opRef }}&amp;campaign_code={{ opCamp }}&amp;eai_trnno={{ opEai }} -->#}
+
+{% set opsolveUrl = "https://greatamericanpower.com/vendor/opsolve/lib/gap-to-ops.php?supno=" ~ opSupno ~ "&eu_acct_no=" ~ opEuAcct ~ "&gu_acct_no=" ~ opGuAcct ~ "&price_code=" ~ opPriceCode ~ "&rev_type=" ~ opRev ~ "&last_name=" ~ opLastName ~ "&first_name=" ~ opFirstName ~ "&main_phone=" ~ opPhone ~ "&cell_phone=" ~ opCell ~ "&email=" ~ opEmail ~ "&street_addr=" ~ opStreet ~ "&street_addr2=" ~ opStreet2 ~ "&city=" ~ opCity ~ "&state_abbr=" ~ opState ~ "&postal=" ~ opZip ~ "&referral_id=" ~ opRef ~ "&campaign_code=" ~ opCamp ~ "&eai_trnno=" ~ opEai %}
+
+{#<!-- {{opsolveUrl}} -->#}
+
+{% set opsolveParams = {
+	url: opsolveUrl,
+	type: 'json',
+	element: 'opsolve',
+	cache: false
+} %}
+{% set opsolveFeed = craft.feedme.feed(opsolveParams) %}
+{% set opError = '' %}
+{% for node in opsolveFeed %}
+	{% set opError = node.error %}
+{% endfor %}
+
+{% for node in opsolveFeed %}
+
+{"opsolve": [{"entity": "{{ node.entity }}", "rscno": "{{ node.rscno }}", "locno": "{{ node.locno }}", "gucno": "{{ node.gucno }}", "error": ""}]}
+
+{% endfor %}
+
+{#<!-- {"opsolve": [{"entity": "4270", "rscno": "1000124822", "locno": "129314", "gucno": "10268018", "error": ""}]} -->#}

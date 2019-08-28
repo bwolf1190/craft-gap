@@ -1,0 +1,269 @@
+{% if craft.request.getQueryParam('ref') is defined %}
+{% set referral_id = craft.request.getQueryParam('ref') %}
+{% else %}
+{% set referral_id = '' %}
+{% endif %}
+
+{% extends "_layout" %}
+
+{% block meta %}
+{% endblock %}
+
+{% block inline_css %}
+{% endblock %}
+
+{% block layout %}
+page-template-default page is-singular not-scrolled
+{% endblock %}
+
+{% block header %}	
+	{% include '_includes/_header' %}
+{% endblock %}
+
+{% block content %}
+	{% set entry = craft.entries.section('enrollment').one() %}
+	{% set mast = entry.pagesMast.one() %}
+	{% if mast %}
+	<div class="innerbanner" style="background-image:url({{ mast.url }});height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+	{% else %}
+	<div class="innerbanner" style="background-image:url(/assets/images/mast/bigstock-200537257-crop.jpg);height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+	{% endif %}
+		
+	<div id="content" class="site-content">
+		<main id="primary" class="content-area" role="main">
+		
+			<article id="post-343771" class="post-343771 page type-page status-publish hentry">
+				<div class="entry-inner">
+					<header class="entry-header">
+						<h1 class="entry-title">{{ entry.pagesTitle }}</h1>
+					</header>
+					<div class="entry-content">
+
+						<div id="breadcrumbs">
+							<span xmlns:v="http://rdf.data-vocabulary.org/#">
+								<span typeof="v:Breadcrumb">
+									<a href="/" rel="v:url" property="v:title">&nbsp;</a> › 
+									<span class="breadcrumb_last">{{ entry.pagesTitle }}</span>
+								</span>
+							</span>
+						</div>
+
+						<div id="custom_content">
+							<div class="custom_leftcol">
+								{% set hero = entry.pagesHero.one() %}
+								{% if hero %}
+
+								<p>
+									<img src="{{ hero.url }}" alt="" width="850" height="300" class="alignnone size-full">
+								</p>
+								{% endif %}
+
+								<div class="home_form_new">
+									<h3>ENROLL TODAY!</h3>
+									<h4>Service Plans for <br> Your Home or Business!</h4>
+									
+									<div class="smart-wrap">
+										<div class="smart-forms smart-container wrap-1" style="margin: 0;">
+											{% include '_forms/enrollment/_zipService' %}
+										</div>
+									</div>
+								</div>
+
+								{{ entry.pagesMain }}
+							</div>
+						</div>
+
+						<div class="custom_right_col_cont">
+							{% include '_includes/_sidebar-offer' %}
+						</div>
+
+					</div>
+				</div>
+			</article>
+				
+		</main>
+	</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	
+
+var guURL = "https://get-utility-by-postalcode.azure-api.net/manual/paths/invoke";
+var guKey = "4fb996d251c345629da6483dec53b5cf";
+
+var gcURL = "https://get-campaign.azure-api.net/manual/paths/invoke ";
+var gcKey = "ac1c6ec5e3db49f48a3796827406207b";
+
+var gcoURL= "https://get-campaign-offers.azure-api.net/manual/paths/invoke";
+var gcoKey = "5383804464154cdfbfc376048573bc61";
+
+// skipped function
+
+var godURL = "https://get-campaign-offer-details.azure-api.net/manual/paths/invoke";
+var godKey="70b9dc3d7a2d441cb956b0eb07da5f5b";
+
+var gclURL = "https://get-campaign-lead.azure-api.net/manual/paths/invoke";
+var gclKey= "5d388098461c416ea8062e882b162b4d";
+
+
+
+// return the utility companies given postal code
+function getUtility(){
+    var input = '{ "postalCode": "19106" }';
+    $.ajax({
+        url: guURL,
+        beforeSend: function(xhrObj){
+            xhrObj.setRequestHeader("Content-Type","application/json");
+            //xhrObj.setRequestHeader("Access-Control-Allow-Origin", "*");
+            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",guKey);   
+        },
+        type: "POST",
+        data: input
+    })
+    .done(function(output) {
+        $.each(output, function() {
+          $.each(this, function(k, v) {
+            console.log(v.utilityCode);
+          });
+        });
+    })
+    .fail( function(xhr, textStatus, errorThrown) {
+        //alert(errorThrown.responseText);
+    });
+}
+
+// return the campaign type
+function getCampaign(){
+    var input = '{ "brandCode" : "GAP", "environmentCode" : "Test", "campaignType" : "Enroll", "campaignCode" : "Winback201908" }';
+    $.ajax({
+        url: gcURL,
+        beforeSend: function(xhrObj){
+            xhrObj.setRequestHeader("Content-Type","application/json");
+            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",gcKey);   
+        },
+        type: "POST",
+        data: input
+    })
+    .done(function(output) {
+        //console.log(output);
+        $.each(output, function() {
+          $.each(this, function(k, v) {
+            console.log(v);
+          });
+        });
+    })
+    .fail( function(xhr, textStatus, errorThrown) {
+        alert(errorThrown.responseText);
+    });
+}
+
+
+// return the campaign offers
+function getCampaignOffers(){
+    var input = '{"brandCode" : "GAP", "environmentCode" : "Test", "campaignType" : "Enroll", "campaignCode" : "Enroll", "salesChannel" : "Online", "offerType" : "Plan", "classCode" : "Residential", "utilityCode" : "METED", "commodityCode" : "Electric"}';
+    $.ajax({
+        url: gcoURL,
+        beforeSend: function(xhrObj){
+            xhrObj.setRequestHeader("Content-Type","application/json");
+            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",gcoKey);   
+        },
+        type: "POST",
+        data: input
+    })
+    .done(function(output) {
+        //console.log(output);
+        $.each(output, function() {
+          $.each(this, function(k, v) {
+            console.log(v);
+          });
+        });
+    })
+    .fail( function(xhr, textStatus, errorThrown) {
+        alert(errorThrown.responseText);
+    });
+}
+
+/* skipped function */
+
+// return the campaign offer details
+function getOfferDetails(){
+    var input = '{"brandCode" : "GAP", "offerCode" : "GFE36Add", "classCode" : "Residential", "utilityCode" : "METED", "commodityCode" : "Electric"}';
+    $.ajax({
+        url: godURL,
+        beforeSend: function(xhrObj){
+            xhrObj.setRequestHeader("Content-Type","application/json");
+            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",godKey);   
+        },
+        type: "POST",
+        data: input
+    })
+    .done(function(output) {
+        //console.log(output);
+        $.each(output, function() {
+          $.each(this, function(k, v) {
+            console.log(v);
+          });
+        });
+    })
+    .fail( function(xhr, textStatus, errorThrown) {
+        alert(errorThrown.responseText);
+    });
+}
+
+
+// return the campaign offer details
+function getCampaignLead(){
+    var input = '{"brandCode" : "GAP", "environmentCode" : "Test", "campaignCode" : "Winback201909", "referenceId" : "1281-187"}';
+    $.ajax({
+        url: gclURL,
+        beforeSend: function(xhrObj){
+            xhrObj.setRequestHeader("Content-Type","application/json");
+            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",gclKey);   
+        },
+        type: "POST",
+        data: input
+    })
+    .done(function(output) {
+        //console.log(output);
+        $.each(output, function() {
+          $.each(this, function(k, v) {
+            console.log(v);
+          });
+        });
+    })
+    .fail( function(xhr, textStatus, errorThrown) {
+        alert(errorThrown.responseText);
+    });
+}
+
+
+$(document).ready(function() {
+    getUtility();
+    //getCampaign();
+    //getCampaignOffers();
+    //getOfferDetails();
+    //getCampaignLead();
+
+});
+
+
+
+</script>
+{% endblock %}
+
+{% block footer %}
+	{% include '_includes/_footer' %}
+{% endblock %}
+
+{% block scripts_includes %}
+	<!-- JS -->
+{% endblock %}
+
+{% block inline_scripts %}
+	{% include '_forms/_zipScriptFilter' %}
+{% endblock %}
+

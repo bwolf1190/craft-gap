@@ -1,0 +1,722 @@
+{% if craft.app.request.getParam('gap_customer_no') is defined %}
+{% set gapNoGo = craft.app.request.getParam('gap_customer_no') %}
+{% endif %}
+{% if craft.app.request.getParam('supplier_acct_no') is defined %}
+{% set supplierNoGo = craft.app.request.getParam('supplier_acct_no') %}
+{% endif %}
+{% if craft.app.request.getParam('first_name') is defined %}
+{% set firstGo = craft.app.request.getParam('first_name') %}
+{% endif %}
+{% if craft.app.request.getParam('last_name') is defined %}
+{% set lastGo = craft.app.request.getParam('last_name') %}
+{% endif %}
+{% if craft.app.request.getParam('email') is defined %}
+{% set emailGo = craft.app.request.getParam('email') %}
+{% endif %}
+{% if craft.app.request.getParam('phone') is defined %}
+{% set phoneGo = craft.app.request.getParam('phone') %}
+{% endif %}
+{% if craft.app.request.getParam('address_1') is defined %}
+{% set address1Go = craft.app.request.getParam('address_1') %}
+{% endif %}
+{% if craft.app.request.getParam('address_2') is defined %}
+{% set address2Go = craft.app.request.getParam('address_2') %}
+{% endif %}
+{% if craft.app.request.getParam('city') is defined %}
+{% set cityGo = craft.app.request.getParam('city') %}
+{% endif %}
+{% if craft.app.request.getParam('state') is defined %}
+{% set stateGo = craft.app.request.getParam('state') %}
+{% endif %}
+{% if craft.app.request.getParam('zip_code') is defined %}
+{% set zipGo = craft.app.request.getParam('zip_code') %}
+{% endif %}
+{% if craft.request.getQueryParam('ref') is defined %}
+{% set referral_id = craft.request.getQueryParam('ref') %}
+{% else %}
+{% set referral_id = '' %}
+{% endif %}
+
+{% extends "_layout" %}
+
+{% block meta %}
+{% endblock %}
+
+{% block inline_css %}
+{% endblock %}
+
+{% block layout %}
+page-template-default page is-singular not-scrolled
+{% endblock %}
+
+{% block header %}	
+	{% include '_includes/_header' %}
+{% endblock %}
+
+{% block content %}
+
+<body class="shop home-page">
+	<div class="wrapper bkg-charcoal">
+		<div class="wrapper-inner">
+			{% set entry = craft.entries.section('offers').one() %}
+			<header class="header header-absolute header-transparent header-fixed-on-mobile" data-helper-in-threshold="200" data-helper-out-threshold="500" data-sticky-threshold="200" data-bkg-threshold="100" data-compact-threshold="100">
+				<div class="header-inner-top">
+					<div class="nav-bar bkg-gapblue">
+						<div class="row flex">
+							<div class="column width-8 nav-bar-inner v-align-middle left">
+								<div>
+									<p><span class="weight-semibold color-white">Questions? Call us:</span> <span class="{% if entry.offerSecondary %}color-gap{{ entry.offerSecondary }}{% else %}color-gapgreen{% endif %}">{{ entry.offerPhone }}</span> <span class="color-grey">8AM to 5PM EST, Monday - Friday</span></p>
+								</div>
+							</div>
+							<div class="column width-4 nav-bar-inner v-align-middle right">
+								<div>
+									<ul class="social-list list-horizontal">
+										<li><a href="{{ baseline.gapFacebook }}" target="_blank"><span class="icon-facebook small color-white"></span></a></li>
+										<li><a href="{{ baseline.gapTwitter }}" target="_blank"><span class="icon-twitter small color-white"></span></a></li>
+										<li><a href="{{ baseline.gapLinkedin }}" target="_blank"><span class="icon-linkedin small color-white"></span></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="header-inner">
+					<div class="row nav-bar">
+						<div class="column width-12 nav-bar-inner">
+							<div class="row">
+								<div class="column width-4 primary-nav-column">
+									<nav class="navigation nav-block primary-navigation nav-right sub-menu-indicator">
+										<ul>
+											<li class="">&nbsp;</li>
+										</ul>
+									</nav>
+								</div>
+								<div class="column width-4 logo-column">
+									<div class="logo logo-center">
+										<div class="logo-inner">
+											<a href="/offers/"><img src="/assets/images/brand/Great-American-Power_logo.png" alt="Great American Power" /></a>
+											<a href="/offers/"><img src="/assets/images/brand/Great-American-Power_logo.png" alt="Great American Power" /></a>
+										</div>
+									</div>
+								</div>
+								<div class="column width-4 secondary-nav-column">
+									<nav class="navigation nav-block primary-navigation nav-left sub-menu-indicator">
+										<ul>
+											<li class="">&nbsp;</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+			
+			<div class="content clearfix reveal-footer">
+				{% set bgImage = entry.offerBgImage.one() %}
+				{% if bgImage %}
+				<div class="section-block feature-1 overlap-bottom pt-150 pb-40" style="background-image:url({{ bgImage.url }})" >
+				{% else %}
+				<div class="section-block feature-1 overlap-bottom pt-150 pb-40" style="background-image:url(/assets/images/mast/wind.jpg)" >
+				{% endif %}
+					<div class="media-overlay background-cover bkg-gradient-heavy-rain-m opacity-04 horizon" data-animate-in="preset:fadeIn;duration:1000ms;" data-threshold="0.1"></div>
+					<div class="row flex two-columns-on-tablet">
+						<div class="column width-6 v-align-middle left center-on-mobile">
+							<div>
+								<h1 class="mb-20 horizon" data-no-scale data-animate-in="preset:slideInUpShort;duration:800ms;delay:400ms;">
+									<span class="color-charcoal weight-bold mb-5">
+										{{ entry.offerHeader|raw }}
+									</span>
+								</h1>
+								<p class="lead weight-light color-charcoal mb-30 hide-on-mobile horizon" data-no-scale data-animate-in="preset:slideInUpShort;duration:600ms;delay:200ms;"> {{ entry.offerSubheader|raw }} </p>
+								<div class="mb-mobile-30 horizon" data-no-scale data-animate-in="preset:slideInUpShort;duration:1000ms;delay:600ms;">
+									<a href="#enrollNow" class="scroll-link button rounded large {% if entry.offerPrimary %}bkg-gap{{entry.offerPrimary }}{% else %}bkg-gapgreen{% endif %} bkg-hover-gapblue color-white color-hover-white shadow left">
+										<span class="button-content">
+											<span class="icon medium left"><i class="fab fa-amazon fa-2x"></i></span>
+											<span>
+												{% for row in entry.offerButton %}
+												<small>{{ row.buttonCta }}</small>{{ row.buttonReward }}
+												{% endfor %}
+											</span>
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="column width-5 offset-1 right center-on-mobile">
+							<div class="feature-image">
+								<div class="thumbnail mb-0 horizon" data-animate-in="preset:slideInRightShort;duration:1000ms;" data-threshold="0.5">
+									{% set hero = entry.offerImage.one() %}
+									{% if hero %}
+									<img src="{{ hero.url }}" width="550" alt="">
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="section-block clearfix pt-0 bkg-grey-ultralight">
+					<div class="row">
+						<div class="column width-12 no-padding">
+							<div class="box rounded bkg-grey-light left center-on-mobile mb-50">
+								<div class="row">
+									<div class="column width-7">
+										<h4 class="message">
+											<span class="label rounded bkg-gapblue color-white hide-on-mobile">Questions?</span>
+											Call for additional customer support: <span class="{% if entry.offerPrimary %}color-gap{{entry.offerPrimary }}{% else %}color-gapgreen{% endif %}"><strong> {{ entry.offerPhone }}</strong></span>
+										</h4>
+									</div>
+									<div class="column width-5 right center-on-mobile">
+										<h4 class="message color-grey">
+											Available 8AM to 5PM EST, Monday - Friday
+										</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="row">
+						<div class="column width-5 content-inner">
+							<div class="row">
+								<div class="pricing-table rounded medium columns-1 mb-0 horizon" data-animate-in="preset:slideInUpShort;duration:300ms;" data-threshold="0.3">
+									<div class="pricing-table-column mb-mobile-30 bkg-gradient-gap-blue">
+										<div class="pricing-table-header">
+											<h3 class="weight-semi-bold color-white left">{{ entry.offerCtaHeader }}</h3>
+										</div>
+										<div class="pricing-table-text color-white left">
+											<p class="lead">{{ entry.offerCtaLead }}</p>
+											<ul class="mb-0">
+												{% for row in entry.offerCtaFeatures %}
+												<li>{{ row.ctaFeature }}</li>
+												{% endfor %}
+											</ul>
+										</div>
+										{% set ctaImg = entry.offerCTAimg.one() %}
+										{% if ctaImg %}
+										<div class="pricing-table-footer mt-0 pt-0">
+											<img src="{{ ctaImg.url }}" width="550" alt="">
+										</div>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+							
+							{% set supplier = entry.offerPlanTerms.one() %}
+							{% set termsPdf = entry.offerPlanTerms.one() %}
+							{% set agencyPdf = entry.offerPlanAgency.one() %}
+							{% set enviroPdf = entry.offerPlanEnviro.one() %}
+							
+							<div class="row pt-60">
+								<div class="pricing-table rounded medium columns-1 mb-0 left horizon" data-animate-in="preset:slideInUpShort;duration:300ms;" data-threshold="0.4">
+									<div class="pricing-table-column mb-mobile-30 border-grey">
+										<div class="pricing-table-header left">
+											{% if entry.offerPlanGreen %}
+											<div class="label pill inline-block text-small mb-10 bkg-gapgreen color-white pull-right">100% Green</div>
+											{% endif %}
+											<h2 class="weight-bold">{% if entry.offerPlanGreen %}<i class="fas fa-leaf color-gapgreen"></i>{% endif %} {{ entry.offerPlanHeader }}</h2>
+											<p class="lead mt-20 mb-0">{{ entry.offerPlanLead }}</p>
+										</div>
+										<div class="pricing-table-price left">
+											<h4>
+												<span class="currency">$</span>{{ entry.offerPlanRate }}
+												<span class="interval">/kWh</span>
+											</h4>
+										</div>
+										<div class="pricing-table-text">
+											<ul class="list-unstyled mb-0">
+												{% for row in entry.offerPlanFeatures %}
+												<li><span class="icon-check color-gapgreen"></span> {{ row.planFeature }}</li>
+												{% endfor %}
+											</ul>
+										</div>
+										{% if entry.offerPlanCancellation %}
+										<div class="pricing-table-footer left">
+											<p class="mt-0 mb-0"><em>* Early termination fees apply, see uniform disclosure <a href="#getTerms" class="weight-bold termsEx" style="color:#0B2C65;">statement</a> for details.</em></p>
+										</div>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="enrollNow" class="column width-7 sidebar right">
+							<div class="sidebar-inner freeze" data-extra-space-top="30" data-extra-space-bottom="80" data-push-section="#disclosure">
+								<div class="product-summary">
+									<div class="row">
+										<div class="column width-12 no-padding-right">
+
+											<div class="product-price price box rounded large bkg-white">
+												<h3>{{ entry.offerFormHeader }}</h3>
+												
+												<div class="smart-wrap">
+													<div class="smart-forms smart-container wrap-1">
+														<div class="form-body theme-green">
+															<div class="frm-row">
+																<div class="colm colm12">
+																	<form id="enrollForm" class="product-form" action="https://www.getdrip.com/forms/200599577/submissions" method="post" data-drip-embedded-form="200599577">
+																		
+																		{{ csrfInput() }}
+																		
+																		<input type="hidden" id="drip-gap-customer-no" value="{{ gapNoGo }}" />
+																		
+																		<div class="frm-row">
+																			<div class="section colm colm12">
+																				<label class="field" for="drip-supplier-acct-no">
+																					<input type="text" name="fields[supplier_acct_no]" id="drip-supplier-acct-no" class="gui-input" value="{{ supplierNoGo }}" placeholder="Supplier Account No." tabindex="1">
+																				</label>
+																			</div>
+																		</div>
+																		<div class="frm-row pt-20">
+																			<div class="section colm colm6 pt-mobile-20">
+																				<label class="field" for="drip-first-name">
+																					<input type="text" name="fields[first_name]" id="drip-first-name" class="gui-input" value="{{ firstGo }}" placeholder="First Name" tabindex="2">
+																				</label>
+																			</div>
+																			<div class="section colm colm6">
+																				<label class="field" for="drip-last-name">
+																					<input type="text" name="fields[last_name]" id="drip-last-name" class="gui-input" value="{{ lastGo }}" placeholder="Last Name" tabindex="3">
+																				</label>
+																			</div>
+																		</div>
+																		<div class="frm-row">
+																			<div class="section colm colm6 pt-mobile-20">
+																				<label class="field" for="drip-email">
+																					<input type="email" name="fields[email]" id="drip-email" class="gui-input" value="{{ emailGo }}" placeholder="Email Address" tabindex="4">
+																				</label>
+																			</div>
+																			<div class="section colm colm6 pt-mobile-20">
+																				<label class="field" for="drip-phone">
+																					<input type="text" name="fields[phone]" id="drip-phone" class="gui-input" value="{{ phoneGo }}" placeholder="Phone" tabindex="5">
+																				</label>
+																			</div>
+																		</div>
+																		<div class="frm-row">
+																			<div class="section colm colm6">
+																				<label class="field" for="drip-address-1">
+																					<input type="text" name="fields[address_1]" id="drip-address-1" class="gui-input" value="{{ address1Go }}" placeholder="Address 1" tabindex="6">
+																				</label>
+																			</div>
+																			<div class="section colm colm6">
+																				<label class="field" for="drip-address-2">
+																					<input type="text" name="fields[address_2]" id="drip-address-2" class="gui-input" value="{{ address2Go }}" placeholder="Address 2" tabindex="7">
+																				</label>
+																			</div>
+																		</div>
+																		<div class="frm-row">
+																			<div class="section colm colm5 pt-mobile-20">
+																				<label class="field" for="drip-city">
+																					<input type="text" name="fields[city]" id="drip-city" class="gui-input" value="{{ cityGo }}" placeholder="City" tabindex="8">
+																				</label>
+																			</div>
+																			<div class="section colm colm4 pt-mobile-20">
+																				<label class="field select" for="drip-state">
+																					<select name="fields[state]" id="drip-state" tabindex="9">
+																						<option value="">State</option>
+																						<option value="AL" {% if cityGo == "AL" %}selected{% endif %}>Alabama</option>
+																						<option value="AK" {% if cityGo == "AK" %}selected{% endif %}>Alaska</option>
+																						<option value="AZ" {% if cityGo == "AZ" %}selected{% endif %}>Arizona</option>
+																						<option value="AR" {% if cityGo == "AR" %}selected{% endif %}>Arkansas</option>
+																						<option value="CA" {% if cityGo == "CA" %}selected{% endif %}>California</option>
+																						<option value="CO" {% if cityGo == "CO" %}selected{% endif %}>Colorado</option>
+																						<option value="CT" {% if cityGo == "CT" %}selected{% endif %}>Connecticut</option>
+																						<option value="DE" {% if cityGo == "DE" %}selected{% endif %}>Delaware</option>
+																						<option value="DC" {% if cityGo == "DC" %}selected{% endif %}>District Of Columbia</option>
+																						<option value="FL" {% if cityGo == "FL" %}selected{% endif %}>Florida</option>
+																						<option value="GA" {% if cityGo == "GA" %}selected{% endif %}>Georgia</option>
+																						<option value="HI" {% if cityGo == "HI" %}selected{% endif %}>Hawaii</option>
+																						<option value="ID" {% if cityGo == "ID" %}selected{% endif %}>Idaho</option>
+																						<option value="IL" {% if cityGo == "IL" %}selected{% endif %}>Illinois</option>
+																						<option value="IN" {% if cityGo == "IN" %}selected{% endif %}>Indiana</option>
+																						<option value="IA" {% if cityGo == "IA" %}selected{% endif %}>Iowa</option>
+																						<option value="KS" {% if cityGo == "KS" %}selected{% endif %}>Kansas</option>
+																						<option value="KY" {% if cityGo == "KY" %}selected{% endif %}>Kentucky</option>
+																						<option value="LA" {% if cityGo == "LA" %}selected{% endif %}>Louisiana</option>
+																						<option value="ME" {% if cityGo == "ME" %}selected{% endif %}>Maine</option>
+																						<option value="MD" {% if cityGo == "MD" %}selected{% endif %}>Maryland</option>
+																						<option value="MA" {% if cityGo == "MA" %}selected{% endif %}>Massachusetts</option>
+																						<option value="MI" {% if cityGo == "MI" %}selected{% endif %}>Michigan</option>
+																						<option value="MN" {% if cityGo == "MN" %}selected{% endif %}>Minnesota</option>
+																						<option value="MS" {% if cityGo == "MS" %}selected{% endif %}>Mississippi</option>
+																						<option value="MO" {% if cityGo == "MO" %}selected{% endif %}>Missouri</option>
+																						<option value="MT" {% if cityGo == "MT" %}selected{% endif %}>Montana</option>
+																						<option value="NE" {% if cityGo == "NE" %}selected{% endif %}>Nebraska</option>
+																						<option value="NV" {% if cityGo == "NV" %}selected{% endif %}>Nevada</option>
+																						<option value="NH" {% if cityGo == "NH" %}selected{% endif %}>New Hampshire</option>
+																						<option value="NJ" {% if cityGo == "NJ" %}selected{% endif %}>New Jersey</option>
+																						<option value="NM" {% if cityGo == "NM" %}selected{% endif %}>New Mexico</option>
+																						<option value="NY" {% if cityGo == "NY" %}selected{% endif %}>New York</option>
+																						<option value="NC" {% if cityGo == "NC" %}selected{% endif %}>North Carolina</option>
+																						<option value="ND" {% if cityGo == "ND" %}selected{% endif %}>North Dakota</option>
+																						<option value="OH" {% if cityGo == "OH" %}selected{% endif %}>Ohio</option>
+																						<option value="OK" {% if cityGo == "OK" %}selected{% endif %}>Oklahoma</option>
+																						<option value="OR" {% if cityGo == "OR" %}selected{% endif %}>Oregon</option>
+																						<option value="PA" {% if cityGo == "PA" %}selected{% endif %}>Pennsylvania</option>
+																						<option value="RI" {% if cityGo == "RI" %}selected{% endif %}>Rhode Island</option>
+																						<option value="SC" {% if cityGo == "SC" %}selected{% endif %}>South Carolina</option>
+																						<option value="SD" {% if cityGo == "SD" %}selected{% endif %}>South Dakota</option>
+																						<option value="TN" {% if cityGo == "TN" %}selected{% endif %}>Tennessee</option>
+																						<option value="TX" {% if cityGo == "TX" %}selected{% endif %}>Texas</option>
+																						<option value="UT" {% if cityGo == "UT" %}selected{% endif %}>Utah</option>
+																						<option value="VT" {% if cityGo == "VT" %}selected{% endif %}>Vermont</option>
+																						<option value="VA" {% if cityGo == "VA" %}selected{% endif %}>Virginia</option>
+																						<option value="WA" {% if cityGo == "WA" %}selected{% endif %}>Washington</option>
+																						<option value="WV" {% if cityGo == "WV" %}selected{% endif %}>West Virginia</option>
+																						<option value="WI" {% if cityGo == "WI" %}selected{% endif %}>Wisconsin</option>
+																						<option value="WY" {% if cityGo == "WY" %}selected{% endif %}>Wyoming</option>
+																					</select>
+																					<i class="arrow double"></i>
+																				</label>
+																			</div>
+																			<div class="section colm colm3 mt-mobile-20">
+																				<label class="field" for="drip-zip-code">
+																					<input type="text" name="fields[zip_code]" id="drip-zip-code" class="gui-input" value="{{ zipGo }}" placeholder="Zip" tabindex="10">
+																				</label>
+																			</div>
+																		</div>
+																		{% if entry.offerGreenInterest %}
+																		<div class="frm-row">
+																			<div class="section colm colm12 mt-mobile-20">
+																				<div class="option-group field">
+																					<label class="switch switch-round switch-green" for="drip-green-interest" style="width:100%;">
+																						<input type="checkbox" name="fields[green_interest]" id="drip-green-interest" tabindex="11">
+																						<span class="switch-label v-align-top" data-on="YES" data-off="NO"></span>
+																						<span class="colm10">I'm interested in learning more about green energy from wind or solar.</span>
+																					</label>
+																				</div>
+																				<div class="clearfix"></div>
+																			</div>
+																		</div>
+																		{% endif %}
+																		{% if entry.offerSecurityInterest %}
+																		<div class="frm-row">
+																			<div class="section colm colm12 mt-20 mt-mobile-20">
+																				<div class="option-group field">
+																					<label class="switch switch-round switch-green" for="drip-security-interest" style="width:100%;">
+																						<input type="checkbox" name="fields[security_interest]" id="drip-security-interest" tabindex="12">
+																						<span class="switch-label v-align-top" data-on="YES" data-off="NO"></span>
+																						<span class="colm10">I'm interested in learning more about home security with Vivint Home.</span>
+																					</label>
+																				</div>
+																				<div class="clearfix"></div>
+																			</div>
+																		</div>
+																		{% endif %}
+																		{% if entry.offerTermsAuthority %}
+																		<div class="frm-row">
+																			<div class="section colm colm12 mt-20 mt-mobile-20">
+																				<div class="option-group field">
+																					<label class="switch switch-round switch-green" for="drip-contract-authority" style="width:100%;">
+																						<input type="checkbox" name="fields[contract_authority]" id="drip-contract-authority" tabindex="13">
+																						<span class="switch-label v-align-top" data-on="YES" data-off="NO"></span>
+																						<span class="colm10">I have the authority to enroll and I am voluntarily authorizing this account and I agree to authorize Great American Power to access my historical usage records from my utility. In the event that my usage indicates I belong to another rate class, Great American Power will notify and ask me to sign a contract indicating my correct rate class. I agree to notify Great American Power in writing whenever I have reason to believe my demand will depart materially from my historical usage. This may result in a change in price.</span>
+																					</label>
+																				</div>
+																				<div class="clearfix"></div>
+																			</div>
+																		</div>
+																		{% endif %}
+																		{% if entry.offerTermsAgree %}
+																		<div class="frm-row">
+																			<div class="section colm colm12 mt-20 mt-mobile-20">
+																				<div class="option-group field">
+																					<label class="switch switch-round switch-green" for="drip-contract-terms" style="width:100%;">
+																						<input type="checkbox" name="fields[contract_terms]" id="drip-contract-terms" tabindex="14">
+																						<span class="switch-label v-align-top" data-on="YES" data-off="NO"></span>
+																						<span class="colm10">I have read, understood, and agree to the <a href="#getTerms" class="weight-bold termsEx" style="color:#0B2C65;">Terms and Conditions</a>.</span>
+																					</label>
+																				</div>
+																				<div class="clearfix"></div>
+																			</div>
+																		</div>
+																		{% endif %}
+																		{% if entry.offerTermsAgency %}
+																		<div class="frm-row">
+																			<div class="section colm colm12 mt-20 mt-mobile-20">
+																				<div class="option-group field">
+																					<label class="switch switch-round switch-green" style="width:100%;">
+																						<input type="checkbox" name="fields[contract_agency]" id="contract_information" tabindex="15">
+																						<span class="switch-label v-align-top" data-on="YES" data-off="NO"></span>
+																						<span class="colm10">I have read, understood, and agree to the <a href="#getAgency" class="weight-bold agencyEx" style="color:#0B2C65;">Letter of Agency</a> of this agreement.</span>
+																					</label>
+																				</div>
+																				<div class="clearfix"></div>
+																			</div>
+																		</div>
+																		{% endif %}
+																		{% if entry.offerTermsEnviro %}
+																		<div class="frm-row">
+																			<div class="section colm colm12 mt-20 mt-mobile-20">
+																				<div class="option-group field">
+																					<label class="switch switch-round switch-green" style="width:100%;">
+																						<input type="checkbox" name="fields[contract_enviro]" id="contract_information" tabindex="16">
+																						<span class="switch-label v-align-top" data-on="YES" data-off="NO"></span>
+																						<span class="colm10">I have read, understood, and agree to the <a href="#getEnviro" class="weight-bold enviroEx" style="color:#0B2C65;">Environmental Disclosure Label</a> of this agreement.</span>
+																					</label>
+																				</div>
+																			</div>
+																			<div class="clearfix"></div>
+																		</div>
+																		{% endif %}
+																		<div class="frm-row">
+																			<div class="section colm colm12 mt-20 mt-mobile-20">
+																				<label class="field" for="drip-signature" style="width:100%;">
+																					<input type="text" name="fields[signature]" id="drip-signature" class="gui-input" value="" placeholder="E-Signature Required (type your full name)" tabindex="17">
+																				</label>
+																			</div>
+																		</div>
+																		<hr>
+																		<div class="frm-row">
+																			<div class="section colm colm12">
+																				<input type="submit" value="ENROLL TODAY" class="form-submit button rounded xlarge full-width {% if entry.offerPrimary %}bkg-gap{{entry.offerPrimary }}{% else %}bkg-gapgreen{% endif %} bkg-hover-gapblue color-white color-hover-white" tabindex="18" data-drip-attribute="sign-up-button">
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div id="disclosure" class="section-block replicable-content bkg-grey-ultralight pt-0">
+					<div class="row">
+						<div class="column width-12">
+							{{ entry.offerPlanDisclaimer }}
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div id="faq" class="section-block replicable-content bkg-grey-ultralight pt-0">
+					<div class="row">
+						<div class="column width-3">
+							<h3 class="mb-50">FAQ</h3>
+						</div>
+						<div class="column width-9 no-padding-right">
+							<div class="accordion rounded" data-toggle-multiple="">
+								<ul>
+									<li class="">
+										<a href="#accordion-1-panel-1"> Q: How do I upgrade?</a>
+										<div id="accordion-1-panel-1" class="" style="height: 0px;">
+											<div class="accordion-content">
+												<p>Simply click Upgrade Plan, review your account information and new low fixed rate, and click submit. Or call {{ entry.offerPhone }} (8-5 EST Mon- Fri) to speak with one of our customer care representatives.</p>
+											</div>
+										</div>
+									</li>
+									<li class="">
+										<a href="#accordion-1-panel-2"> Q: What are the $50.00 in shopping rewards?</a>
+										<div id="accordion-1-panel-2" class="" style="height: 0px;">
+											<div class="accordion-content">
+												<p>Great American Power Rewards is an easy to use, shopping and dining discounts reward program</p>
+												<ul>
+													<li>Great American Power customers get access to $50 in Reward Dollars per month in exclusive and bankable savings.</li>
+													<li>With Great American Power Rewards, customers get access to discounts, deals, and coupons at their choice of over 400,000 local and national merchants.</li>
+													<li>Savings at well-known brands including Nike, Kate Spade, Michaels, Office Depot, GAP, Chili’s, TGI Friday’s, Dunkin Donuts’, McDonald’s, Subway, and many more.</li>
+												</ul>
+											</div>
+										</div>
+									</li>
+									<li>
+										<a href="#accordion-1-panel-3"> Q: When will this rate start?</a>
+										<div id="accordion-1-panel-3">
+											<div class="accordion-content">
+												<p>When you hit the ENROLL TODAY button above, our team will start processing your plan change. You will receive a plan summary via email from us and can expect to see an update to your bill in the next 1 to 2 billing cycles.</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<a href="#accordion-1-panel-4"> Q: How long do I have to decide?</a>
+										<div id="accordion-1-panel-4">
+											<div class="accordion-content">
+												<p>This is a limited time offer, upgrade now or call {{ entry.offerPhone }} (8-5 CST Mon- Fri) to speak to a customer service representative.</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="hide">
+				<div id="getTerms"></div>
+
+				<script src="/assets/js/pdf/pdfobject.min.js"></script>
+			</div>
+			<div class="hide">
+				<div id="getAgency"></div>
+
+				<script src="/assets/js/pdf/pdfobject.min.js"></script>
+			</div>
+			<div class="hide">
+				<div id="getEnviro"></div>
+
+				<script src="/assets/js/pdf/pdfobject.min.js"></script>
+			</div>
+			<!-- Content End -->
+
+	
+		</div>
+	</div>
+
+	<script src="/assets/js/tm/jquery-3.2.1.min.js"></script>
+	<script src="/assets/js/tm/timber.master.min.js"></script>
+	
+	<script type="text/javascript" src="/assets/js/forms/jquery-ui-custom.min.js"></script>
+	<script type="text/javascript" src="/assets/js/forms/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/assets/js/forms/jquery.maskedinput.js"></script>
+	<script type="text/javascript" src="/assets/js/forms/additional-methods.min.js"></script>
+	<script type="text/javascript" src="/assets/js/forms/jquery-ui-slider-pips.min.js"></script>
+	<script type="text/javascript" src="/assets/js/forms/jquery-ui-touch-punch.min.js"></script>
+	<script type="text/javascript" src="/assets/js/forms/jquery.formShowHide.min.js"></script>
+	
+	<script type="text/javascript" src="/assets/js/colorbox/jquery.colorbox-min.js"></script>
+	
+	<script type="text/javascript">
+		
+		$(document).ready(function($){
+			
+			$("#enrollForm").validate({
+				errorClass: "state-error",
+				validClass: "state-success",
+				errorElement: "em",
+				onkeyup: false,
+				onclick: false,
+				rules: {
+					"fields[supplier_acct_no]": {
+						required: true
+					},
+					"fields[first_name]": {
+						required: true
+					},
+					"fields[last_name]": {
+						required: true
+					},
+					"fields[email]": {
+						required: true
+					},
+					"fields[phone]": {
+						required: true
+					},
+					"fields[address_1]": {
+						required: true
+					},
+					"fields[city]": {
+						required: true
+					},
+					"fields[state]": {
+						required: true
+					},
+					"fields[zip_code]": {
+						required: true,
+						number: true
+					},
+					"fields[contract_authority]":{
+						required: true
+					},
+					"fields[contract_terms]":{
+						required: true
+					},
+					"fields[signature]":{
+						required: true
+					}
+				},
+				messages: {
+					"fields[supplier_acct_no]": {
+						required: "Please enter Supplier Account No."
+					},
+					"fields[first_name]": {
+						required: "Please enter First Name"
+					},
+					"fields[last_name]": {
+						required: "Please enter Last Name"
+					},
+					"fields[email]": {
+						required: 'Please enter Email Address'
+					},
+					"fields[phone]": {
+						required: 'Please enter Phone Number'
+					},
+					"fields[address_1]": {
+						required: 'Please enter Address'
+					},
+					"fields[city]": {
+						required: 'Please enter City'
+					},
+					"fields[state]": {
+						required: 'Please select State'
+					},
+					"fields[zip_code]": {
+						required: 'Please enter Zip Code',
+						number: 'Please enter numbers only'
+					},
+					"fields[contract_authority]":{
+						required: 'Please agree to terms to complete enrollment'
+					},
+					"fields[contract_terms]":{
+						required: 'Please agree to terms to complete enrollment'
+					},
+					"fields[signature]":{
+						required: 'Please enter your digital E-Signature'
+					}
+				},
+				highlight: function(element, errorClass, validClass) {
+					$(element).closest('.field').addClass(errorClass).removeClass(validClass);
+				},
+				unhighlight: function(element, errorClass, validClass) {
+					$(element).closest('.field').removeClass(errorClass).addClass(validClass);
+				},
+				errorPlacement: function(error, element) {
+					if (element.is(":radio") || element.is(":checkbox")) {
+						element.closest('.option-group').after(error);
+					} else {
+						error.insertAfter(element.parent());
+					}
+				}
+			
+			});
+			
+			$(".termsEx").colorbox({inline:true, transition:"fade", width:"50%", height:"70%"});
+			
+		}); 
+		
+		$(document).bind('cbox_complete', function(){
+			var cboxHeight = $("#cboxLoadedContent").height();
+			$('.pdfobject').css("height", cboxHeight - 36);
+		});
+    </script>   
+	
+	<!-- Retargeting Pixel - Tapsomnia - DO NOT MODIFY -->
+	{# <img src="https://post.tapsomnia.com/usr/?seg=5&sspid=1"/> #}
+	<!-- End of Retargeting Pixel -->
+	
+	<script type="text/javascript" src="//cdn.callrail.com/companies/430442494/32fe0ed1cda65de583da/12/swap.js"></script>
+</body>
+
+
+
+
+
+			<!-- Footer -->
+{% endblock %}
+
+{% block footer %}
+	{% include '_includes/_footer' %}
+{% endblock %}
+
+{% block scripts_includes %}
+	<!-- JS -->
+{% endblock %}
+
+{% block inline_scripts %}
+{% endblock %}
+

@@ -1,0 +1,87 @@
+	<script type="text/javascript">
+		
+		jQuery(document).ready(function($){
+			
+			jQuery("#completeGo").prop("disabled",true);
+			
+			jQuery("#generalTerms").change(function() {
+				if(this.checked) {
+					jQuery("#completeGo").prop("disabled",false);
+				} else {
+					jQuery("#completeGo").prop("disabled",true);
+				}
+			});
+			
+			jQuery("#completeGo").on( "click", function(){
+				
+				var url = jQuery("#osUrl").val();
+				
+				//data[csrfTokenName] = csrfTokenValue;
+
+				jQuery.ajax({
+					url: 		url,
+					dataType: 	"json",
+					type: 		"GET",
+					beforeSend:  function(result, success) {
+						jQuery("body").addClass('disableScroll');
+						jQuery(".loaderGo").show();
+						jQuery(".loaderTxt").text("Submitting Enrollment. Please Standby.");
+					},
+					success: 	function(result, success) {
+						opsolve = result['opsolve'][0];
+						
+						jQuery('#rscno').val(opsolve['rscno']);
+						jQuery('#locno').val(opsolve['locno']);
+						jQuery('#gucno').val(opsolve['gucno']);
+						
+						if (!$.trim(opsolve)){   
+							
+						}
+						else{   
+							jQuery("#terms-info").submit();
+						}
+					},
+					complete: 	function(result, success) {
+					},
+					error: function(result, success) {
+						//console.log("error");
+					}
+				});
+			});
+			
+			$("#terms-info").validate({
+				errorClass: "state-error",
+				validClass: "state-success",
+				errorElement: "em",
+				onkeyup: false,
+				onclick: false,
+				rules: {
+					generalTerms:{
+						required: true
+					}		
+				},
+				messages: {
+					generalTerms:{
+						required: 'Please agree to terms to complete enrollment'
+					}				
+				},
+				highlight: function(element, errorClass, validClass) {
+					$(element).closest('.field').addClass(errorClass).removeClass(validClass);
+				},
+				unhighlight: function(element, errorClass, validClass) {
+					$(element).closest('.field').removeClass(errorClass).addClass(validClass);
+				},
+				errorPlacement: function(error, element) {
+					if (element.is(":radio") || element.is(":checkbox")) {
+						element.closest('.option-group').after(error);
+					} else {
+						error.insertAfter(element.parent());
+					}
+				}
+			
+			});
+			
+			$(".termsEx").colorbox({transition:"fade", width:"50%", height:"70%"});
+			
+		}); 
+    </script>   

@@ -1,0 +1,73 @@
+{% extends "_layout" %}
+
+{% block meta %}
+	{% set seoGo = craft.entries.id('2858').one() %}
+	{% set seo = seoGo.seo %}
+	{% hook 'seo' %}
+{% endblock %}
+
+{% block inline_css %}
+{% endblock %}
+
+{% block layout %}
+page-template-default page is-singular not-scrolled
+{% endblock %}
+
+{% block header %}	
+	{% include '_includes/_header' %}
+{% endblock %}
+
+{% block content %}
+	<div class="innerbanner" style="background-image:url(/assets/images/mast/bigstock-200537257-crop.jpg);height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+
+	<div id="content" class="site-content" style="padding-top: 141px;">
+		<main id="primary" class="content-area" role="main">
+			<div class="entry-inner">
+				<header class="entry-header">
+					<h1>Oops! That page can't be found.</h1>
+				</header>
+				<div class="entry-content">
+					<p>It looks like nothing was found at this location. Maybe try one of the links below or a search?</p>
+					{#<!-- <form role="search" method="get" class="search-form" action="https://www.greatamericanpower.com/">
+						<label>
+							<span class="screen-reader-text">Search for:</span>
+							<input type="search" class="search-field" placeholder="Search …" value="" name="s">
+						</label>
+						<input type="submit" class="search-submit" value="Search">
+					</form> -->#}
+					<div class="error404-widgets">
+						<div class="widget widget_recent_entries">
+							<h2 class="widget-title">Recent Posts</h2>
+							<ul>
+								{% set blog = craft.entries()
+									.section('blog')
+									.limit(4)
+								%}
+
+								{% set entries = blog.all() %}
+
+								{% for entry in entries %}
+								<li>
+									<a href="/blog/{{ entry.postDate | date("Y") }}/{{ entry.postDate | date("m") }}/{{ entry.slug }}">{{ entry.title }}</a>
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+{% endblock %}
+
+{% block footer %}
+	{% include '_includes/_footer' %}
+{% endblock %}
+
+{% block scripts_includes %}
+	<!-- JS -->
+{% endblock %}
+
+{% block inline_scripts %}
+	{% include '_forms/_zipScriptFilter' %}
+{% endblock %}

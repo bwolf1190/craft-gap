@@ -1,0 +1,131 @@
+{% if craft.app.request.getBodyParam('city') is defined %}
+{% set cityGo = craft.app.request.getBodyParam('city') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('state') is defined %}
+{% set stateGo = craft.app.request.getBodyParam('state') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('zip') is defined %}
+{% set zipGo = craft.app.request.getBodyParam('zip') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('supno') is defined %}
+{% set supnoGo = craft.app.request.getBodyParam('supno') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('sup_name') is defined %}
+{% set sup_nameGo = craft.app.request.getBodyParam('sup_name') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('rev_type') is defined %}
+{% set rev_typeGo = craft.app.request.getBodyParam('rev_type') %}
+{% endif %}
+{% if craft.app.request.getBodyParam('utility_type') is defined %}
+{% set utility_typeGo = craft.app.request.getBodyParam('utility_type') %}
+{% endif %}
+
+{% set quoteUrl = "https://greatamericanpower.com/vendor/opsolve/lib/zip-to-pq.php?zip=" ~ zipGo ~ "&amp;rev_type=" ~ rev_typeGo ~ "&amp;utility_type=" ~ utility_typeGo %}
+{% set quoteParams = {
+	url: quoteUrl,
+	type: 'json',
+	element: 'supplier',
+	cache: false
+} %}
+{% set quoteFeed = craft.feedme.feed(quoteParams) %}
+{% set errorGo = '' %}
+{% for node in quoteFeed %}
+	{% set errorGo = node.error %}
+{% endfor %}
+
+{% set randomEai = [] %}
+{% set numbers = '0123456789' %}
+{% for i in 1..10 %}
+    {% set randomCharacter = random(numbers) %}
+    {% set randomEai = randomEai|merge([randomCharacter]) %}
+{% endfor %}
+{% set randomEai = "GAP" ~ randomEai|join %}
+
+{% extends "_layout" %}
+
+{% block meta %}
+	{% set seoGo = craft.entries.section('enroll').id('2836').one() %}
+	{% set seo = seoGo.seo %}
+	{% hook 'seo' %}
+{% endblock %}
+
+{% block inline_css %}
+	<!-- INLINE CSS -->
+{% endblock %}
+
+{% block layout %}
+page-template-default page is-singular not-scrolled
+{% endblock %}
+
+{% block header %}	
+	{% include '_includes/_header' %}
+{% endblock %}
+
+{% block content %}
+	{% set entry = craft.entries.section('enroll').id('2836').one() %}
+	{% set mast = entry.pagesMast.one() %}
+	{% if mast %}
+	<div class="innerbanner" style="background-image:url({{ mast.url }});height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+	{% else %}
+	<div class="innerbanner" style="background-image:url(/assets/images/mast/bigstock-200537257-crop.jpg);height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+	{% endif %}
+		
+	<div id="content" class="site-content">
+		<main id="primary" class="content-area" role="main">
+			<article id="post-343771" class="post-343771 page type-page status-publish hentry">
+				<div class="entry-inner">
+					<header class="entry-header">
+						{% if errorGo == "zip" or zipGo == "" or rev_typeGo == "C" %}
+						<h1 class="entry-title">Search Plans by Zip Code</h1>
+						{% else %}
+						<h1 class="entry-title">{{ entry.pagesTitle }} {{zipGo}}</h1>
+						{% endif %}
+					</header>
+					<div class="entry-content">
+
+						<div id="breadcrumbs">
+							<span xmlns:v="http://rdf.data-vocabulary.org/#">
+								<span typeof="v:Breadcrumb">
+									<a href="/" rel="v:url" property="v:title">&nbsp;</a> › 
+									<span class="">Enroll</span> › 
+									<span class="breadcrumb_last">{{ entry.title }}</span>
+								</span>
+							</span>
+						</div>
+
+						<div id="custom_content">
+							<div class="col-md-12">
+								<div class="smart-wrap">
+									<div class="smart-forms smart-container wrap-1">
+										{% if errorGo == "zip" or zipGo == "" or rev_typeGo == "C" %}
+										{% include '_forms/_zipFilter' %}
+										{% else %}
+										{% include '_forms/_enroll_residential-select-plan_01' %}
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+		</main>
+	</div>
+
+{% endblock %}
+
+{% block footer %}
+	{% include '_includes/_footer' %}
+{% endblock %}
+
+{% block scripts_includes %}
+	<!-- JS -->
+{% endblock %}
+
+{% block inline_scripts %}
+	{% if errorGo == "zip" or zipGo == "" or rev_typeGo == "C" %}
+	{% include '_forms/_zipScriptFilter' %}
+	{% else %}
+	{% include '_forms/_enroll_residential-select-plan_01_script' %}
+	{% endif %}
+{% endblock %}

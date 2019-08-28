@@ -1,0 +1,91 @@
+{% extends "_layout" %}
+
+{% block meta %}
+	{% set seoGo = craft.entries.slug(craft.app.request.getSegment(4)).one() %}
+	{% set seo = seoGo.seo %}
+	{% hook 'seo' %}
+{% endblock %}
+
+{% block inline_css %}
+{% endblock %}
+
+{% block layout %}
+post-template-default single single-post postid-344125 single-format-standard is-singular not-scrolled
+{% endblock %}
+
+{% block header %}	
+	{% include '_includes/_header' %}
+{% endblock %}
+
+{% block content %}
+	{% set entry = craft.entries.slug(craft.app.request.getSegment(4)).one() %}
+	{% set mast = entry.blogMast.one() %}
+	{% if mast %}
+	<div class="innerbanner" style="background-image:linear-gradient(to bottom,transparent,#fff),url({{ mast.url }});/*height: 415px;*/ width: 100%; background-position: center top; background-size: 100%; background-repeat:no-repeat; position: absolute;"></div>
+	{% else %}
+	<div class="innerbanner" style="background-image:linear-gradient(to bottom,transparent,#fff),url(/assets/images/mast/bigstock-200537257-crop.jpg);/*height: 415px;*/ width: 100%; background-position: center top; background-size: 100%; background-repeat:no-repeat; position: absolute;"></div>
+	{% endif %}
+
+	<div id="content" class="site-content" style="padding-top: 141px;">
+		<main id="primary" class="content-area" role="main" style="padding-top:35px;">
+			<article id="post-344125" class="post-344125 post type-post status-publish format-standard hentry category-gap">
+				<div class="entry-inner">
+					<header class="entry-header">
+						<div class="entry-meta"></div>
+
+						<h1 class="entry-title">{{ entry.title }}</h1>
+						<div class="entry-posted">
+							<div class="posted-info">
+								<span class="byline">Posted by <span class="author vcard">{{ entry.author.fullName }}</span></span> on <span class="posted-on"><a href="/blog/{{ entry.postDate | date("Y") }}/{{ entry.postDate | date("m") }}/{{ entry.slug }}" rel="bookmark"><time class="entry-date published" datetime="{{ entry.postDate|atom }}">{{ entry.postDate | date("M d, Y") }}</time><time class="updated" datetime="{{ entry.postDate|atom }}">{{ entry.postDate | date("M d, Y") }}</time></a>
+								</span>
+							</div>
+						</div>
+					</header>
+
+					<div class="entry-content">
+						{{ entry.blogBody }}
+					</div>
+				</div>
+			</article>
+			
+			{# Set parameters for prev/next elements list #}
+			{% set params = craft.entries.section('blog') %}
+
+			{# Get the prev/next elements #}
+			{% set prevEntry = entry.getPrev(params) %}
+			{% set nextEntry = entry.getNext(params) %}
+
+			<nav class="navigation post-navigation" role="navigation">
+				<h2 class="screen-reader-text">Post navigation</h2>
+				<div class="nav-links">
+					<div class="nav-previous">
+						{% if prevEntry %}
+						<a href="/blog/{{ prevEntry.postDate | date("Y") }}/{{ prevEntry.postDate | date("m") }}/{{ prevEntry.slug }}" rel="prev">
+							<div class="nav-previous"><span class="nav-subtitle">Previous Post</span> <span class="nav-title">{{ prevEntry.title }}</span>
+							</div>
+						</a>
+						{% endif %}
+						{% if nextEntry %}
+						<a href="/blog/{{ nextEntry.postDate | date("Y") }}/{{ nextEntry.postDate | date("m") }}/{{ nextEntry.slug }}" rel="prev">
+							<div class="nav-previous"><span class="nav-subtitle">Next Post</span> <span class="nav-title">{{ nextEntry.title }}</span>
+							</div>
+						</a>
+						{% endif %}
+					</div>
+				</div>
+			</nav>
+		</main>
+	</div>
+{% endblock %}
+
+{% block footer %}
+	{% include '_includes/_footer' %}
+{% endblock %}
+
+{% block scripts_includes %}
+	<!-- JS -->
+{% endblock %}
+
+{% block inline_scripts %}
+	{% include '_forms/_zipScriptFilter' %}
+{% endblock %}

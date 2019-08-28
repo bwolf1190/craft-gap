@@ -1,0 +1,156 @@
+										<div class="form-body smart-steps steps-theme-green theme-green">
+											<div class="frm-row">
+												<div class="colm colm9">
+													{% set submission = craft.freeform.submissions({
+														form: 'gapEnrollment',
+														token: craft.app.request.getSegment(3)
+													}).one() %}
+													
+													{% if submission %}
+													{% else %}
+													{% redirect "/enroll/" %}
+													{% endif %}
+													
+													{% set form = craft.freeform.form("gapEnrollment") %}
+											
+													{{ form.renderTag({
+														id: "terms-info",
+														class: "wizard clearfix",
+														returnUrl: "enroll/residential-service-info/{{ submission.token }}"
+													}) }}
+														
+														<div class="steps clearfix">
+															<ul role="tablist">
+																<li role="tab" class="first done" aria-disabled="true" aria-selected="false">
+																	<a id="smart-form-t-0" href="#smart-form-h-0" aria-controls="smart-form-p-0">
+																		<span class="current-info audible">current step: </span><span class="number">1.</span> Select a Plan
+																	</a>
+																</li>
+																<li role="tab" class="done" aria-disabled="true" aria-selected="false">
+																	<a id="smart-form-t-1" href="#smart-form-h-1" aria-controls="smart-form-p-1">
+																		<span class="number">2.</span> Contact Info
+																	</a>
+																</li>
+																<li role="tab" class="done" aria-disabled="true" aria-selected="false">
+																	<a id="smart-form-t-2" href="#smart-form-h-2" aria-controls="smart-form-p-2">
+																		<span class="number">3.</span> Service Info
+																	</a>
+																</li>
+																<li role="tab" class="current last" aria-disabled="false" aria-selected="true">
+																	<a id="smart-form-t-3" href="#smart-form-h-3" aria-controls="smart-form-p-3">
+																		<span class="number">4.</span> Complete
+																	</a>
+																</li>
+															</ul>
+														</div>
+														
+														<div class="content clearfix">
+															
+															<input type="hidden" name="action" value="freeform/submissions/save">
+															<input type="hidden" name="submissionToken" value="{{ submission.token }}" />
+															<input type="hidden" name="statusId" value="5" />
+															<input type="hidden" name="formRoute" value="Y" />
+															<input type="hidden" name="formReturnUrl" value="/enroll/residential-completed/{{ submission.token }}" />
+															<input type="hidden" name="osUrl" id="osUrl" value="/enroll/gap-to-opsolve/{{ submission.token }}" />
+															
+															<input type="hidden" name="response_ind" value="Y" />
+															<input type="hidden" name="wlog_action_code" value="3P_VERIF" />
+															
+															<input type="hidden" name="rscno" id="rscno" value="" />
+															<input type="hidden" name="locno" id="locno" value="" />
+															<input type="hidden" name="gucno" id="gucno" value="" />
+															{#<!-- <input type="hidden" name="consumer_alert[]" id="consumer_alert" value="{{ submission.email }}" /> -->#}
+															
+															<fieldset>
+																<div class="spacer-t30 spacer-b30">
+																	<div class="tagline"><span>Confirm &amp; Complete</span></div>
+																</div>
+																<div class="section">
+																	<div class="notification alert-info">
+																		<p style="padding-bottom:0;">Please read and agree to terms to complete enrollment.</p>
+																	</div>
+																</div>																
+																<div class="section">
+																	<div class="option-group field">
+																		<label class="switch switch-round switch-green">
+																			<input type="checkbox" name="generalTerms" id="generalTerms">
+																			<span class="switch-label" data-on="YES" data-off="NO"></span>
+																			<span> I have <a href="/terms-enroll/" class="termsEx"> read and agree </a> to Great American Power's terms.</span>
+																		</label>
+																		{#<!-- <label class="option">
+																			<input type="checkbox" name="generalTerms" id="generalTerms" value="General Terms">
+																			<span class="checkbox"></span> 
+																			Please <a href="https://www.greatamericanpower.com/pdf/disclosure-statements/Great-American-Power-Disclosure-Statement-ComEd.pdf?v=1" target="_blank"> read and agree </a> to our the terms                
+																		</label> -->#}
+																	</div>
+																</div>
+																<div class="section">
+																	<div class="option-group field">
+																		<label class="switch switch-round switch-green">
+																			<input type="checkbox" name="newsletter" id="newsletter" checked="">
+																			<span class="switch-label" data-on="YES" data-off="NO"></span>
+																			<span> I would like to receive Great American Power offers and news. </span>
+																		</label>
+																		{#<!-- <label class="option">
+																			<input type="checkbox" name="newsletter" id="newsletter" value="Yes" checked>
+																			<span class="checkbox"></span> 
+																			I would like to receive Great American Power offers and news.
+																		</label> -->#}
+																	</div>
+																</div>
+																<div class="result"></div>
+															</fieldset>
+														</div>
+														
+														<div class="actions clearfix" style="display: block;">
+															<ul role="menu" aria-label="Pagination">
+																<li aria-hidden="false" aria-disabled="false">
+																	<button id="completeGo" type="button" class="button btn-green">Complete Enrollment!</button>
+																	<button id="completeGoS" type="submit" class="button btn-green" style="display:none;">Complete Enrollment!</button>
+																</li>
+															</ul>
+														</div>
+													{{ form.renderClosingTag }}
+													
+													<div class="spacer-t40">
+														{{ entry.pagesMain }}
+													</div>
+												</div>
+												
+												<div class="colm colm3">
+													<div class="frm-row">
+														<div class="colm colm12">
+															<h3 class="plan_guide">Your Selected Plan:</h3>
+															<div class="section">
+																<div id="plan_alert" class="notification alert-info spacer-t10" style="display: none;">
+																	<p style="padding-bottom:0;">Please select a service plan. </p>
+																</div>
+																<div id="plan_go" class="price-box">
+																	{% if submission.green == '100.00' %}
+																	<div id="plan_goGreen" class="ribbon" style="display:none;">
+																		<div class="ribbon-inner"><i class="fa fa-leaf"></i></div>
+																	</div>
+																	{% endif %}
+																	<h2 style="text-transform: none;">$<span id="plan_goPrice">{{ submission.pricekw }}</span> / kWh</h2>
+																	<div class="plan_provider">
+																		{#<!-- <img id="plan_goSup" src="/assets/images/providers/{{ submission.supno }}.png"/> -->#}
+																		<img id="plan_goSup" src="/assets/images/providers/GAP.png"/>
+																	</div>
+																	<p id="plan_supnameGo" class="spacer-t20 spacer-b10" style="font-size: 15px; color: #666;">{{ submission.supname }}</p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-bolt fa-lg"></i> <span id="plan_goGen">{{ submission.gen }}</span></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-chart-bar fa-lg"></i> <span id="plan_goRate">{{ submission.rate }}</span></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-shopping-bag fa-lg"></i> <span id="plan_goReward"></span>{{ submission.rewards }}</p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-door-open fa-lg"></i> <span id="plan_goEarly">{{ submission.early }}</span></p>
+																</div>
+																
+																{% include '_includes/_sidebar-support' %}
+															</div>
+														</div>
+													</div> 
+												</div>
+											</div>
+										</div>	

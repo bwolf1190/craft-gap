@@ -1,0 +1,44 @@
+{#<!-- <script type="text/javascript">setTimeout("window.location.reload(true);",30*60*1000);</script>
+<iframe id="gap_s" src="https://www.greatamericanpower.com/offers" style="height:0px;width:0px; margin-left:-1000px "></iframe> -->#}
+<div class="custom_rightcol">
+	<h3>View Energy Plans for<br>Your Business or Home!</h3>
+	
+	<div class="smart-wrap">
+		<div class="smart-forms smart-container wrap-1" style="margin: 0;">
+			{% include '_forms/_zipFilter' %}
+		</div>
+	</div>
+	
+	{#<!-- <h4>Enter Your Zip Code to Get Started</h4>
+	<form action="https://www.greatamericanpower.com/search" method="post" accept-charset="UTF-8" id="enroll">
+		<input type="hidden" name="_token" value="">
+		<input class="form-control" name="zip" type="text" id="zip" pattern="[0-9]{5}" title="Five digit zip code" required="">
+		<select name="service" id="customerType" required="">
+			<option value="">Service Type</option>
+			<option value="Residential">Residential</option>
+			<option value="Commercial">Commercial</option>
+		</select>
+		<div class="zip-search-error"></div>
+		<button type="submit" class="emebutton ctabuttonmargin pull-right" style="margin-top:1.5em;">View Plans</button>
+	</form> -->#}
+</div>
+{#<!-- <script>
+	jQuery(document).ready(function () { 
+		jQuery("#enroll").submit(function(e) {
+			var self = this;
+			e.preventDefault();
+
+			jQuery.ajax({
+				url: '/wp/wp-content/themes/dyad/template-parts/laravel-token.php',
+				success: function(data) {
+					jQuery('input[name="_token"]').val(data);
+				},
+				complete: function(){
+					//alert('token value set');
+					self.submit();
+				},
+			});
+			return false;
+		});
+	});
+</script> -->#}

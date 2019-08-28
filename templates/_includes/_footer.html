@@ -1,0 +1,127 @@
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="widget-area widgets-four" role="complementary">
+				<div class="grid-container">
+					<aside id="search-2" class="widget widget_search">
+						{#<!-- <form role="search" method="get" class="search-form" action="https://www.greatamericanpower.com/">
+							<label>
+								<span class="screen-reader-text">Search for:</span>
+								<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
+							</label>
+						
+							<input type="submit" class="search-submit" value="Search"/>
+						</form> -->#}
+					</aside>
+					
+					<aside id="nav_menu-3" class="widget widget_nav_menu">
+						<h3 class="widget-title">Navigation</h3>
+						<div class="menu-main-container">
+							<ul id="menu-main" class="menu">
+								<li class="menu-item menu-item-type-post_type menu-item-object-page">
+									<a href="/">Home</a>
+								</li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page">
+									<a href="/enroll/">Enroll</a>
+								</li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page">
+									<a href="/rewards/">Rewards &amp; Discounts</a>
+								</li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page">
+									<a href="/green-energy/">Green Energy</a>
+								</li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page">
+									<a href="/home-solutions/">Home Solutions</a>
+								</li>
+								
+								<li class="menu-item menu-item-type-post_type menu-item-object-page">
+									<a href="/business-solutions/">Business Solutions</a>
+								</li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page">
+									<a href="/blog/">Blog</a>
+								</li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page">
+									<a href="/faq-frequently-asked-questions-energy-electricity/">FAQ</a>
+								</li>
+								<li class="menu-item menu-item-type-post_type menu-item-object-page">
+									<a href="/contact-us-customer-service/">Contact Us</a>
+								</li>
+							</ul>
+						</div>
+					</aside>
+					<aside id="recent-posts-2" class="widget widget_recent_entries">
+						<h3 class="widget-title">Recent Blog Posts</h3>
+						<ul>
+							{% set blog = craft.entries()
+								.section('blog')
+								.limit(4)
+							%}
+
+							{% set entries = blog.all() %}
+
+							{% for entry in entries %}
+							<li>
+								<a href="/blog/{{ entry.postDate | date("Y") }}/{{ entry.postDate | date("m") }}/{{ entry.slug }}">{{ entry.title }}</a>
+								<span class="post-date">{{ entry.postDate | date("M d, Y") }}</span>
+							</li>
+							{% endfor %}
+						</ul>
+					</aside>
+					<aside id="text-3" class="widget widget_text">
+						<h3 class="widget-title">Great American Power</h3>
+						<div class="textwidget">
+							<ul>
+								<li>{{ baseline.gapAddress|raw }}<br/> {{ baseline.gapMainPhone }}
+									<br/>
+									<a href="mailto:GAPOnline@GreatAmericanPower.com">Email</a>
+								</li>
+								<li>{{ baseline.footerBC }}</li>
+							</ul>
+						</div>
+					</aside>
+				</div>
+			</div>
+			
+			<div class="footer-bottom-info has-social-menu">
+				<div class="social-links">
+					<ul id="menu-social" class="social-links-items">
+						{% if baseline.gapFacebook %}
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a href="{{ baseline.gapFacebook }}" target="_blank"><span class="screen-reader-text">Facebook</span></a>
+						</li>
+						{% endif %}
+						{% if baseline.gapTwitter %}
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a href="{{ baseline.gapTwitter }}" target="_blank"><span class="screen-reader-text">Twitter</span></a>
+						</li>
+						{% endif %}
+						{% if baseline.gapInstagram %}
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a href="{{ baseline.gapInstagram }}" target="_blank"><span class="screen-reader-text">Instagram</span></a>
+						</li>
+						{% endif %}
+						{% if baseline.gapYoutube %}
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a href="{{ baseline.gapYoutube }}" target="_blank"><span class="screen-reader-text">YouTube</span></a>
+						</li>
+						{% endif %}
+						{% if baseline.gapLinkedin %}
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a href="{{ baseline.gapLinkedin }}" target="_blank"><span class="screen-reader-text">LinkedIn</span></a>
+						</li>
+						{% endif %}
+						{% if baseline.gapPinterest %}
+						<li class="menu-item menu-item-type-custom menu-item-object-custom">
+							<a href="{{ baseline.gapPinterest }}" target="_blank"><span class="screen-reader-text">Pinterest</span></a>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+				<div class="site-info">
+					<div></div>
+					&copy; {{ now|date("Y") }} Great American Power
+				</div>
+				<div class="site-mid" style="margin:0 auto; max-width:700px;">
+					{{ baseline.gapLicenses|raw }}<br>
+					<a href="/historical-rates/">Historical Rates</a>
+				</div>
+			</div>
+		</footer>

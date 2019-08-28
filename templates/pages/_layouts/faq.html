@@ -1,0 +1,114 @@
+{% extends "_layout" %}
+
+{% block meta %}
+	{% set seoGo = craft.entries.slug(craft.app.request.getSegment(1)).one() %}
+	{% set seo = seoGo.seo %}
+	{% hook 'seo' %}
+{% endblock %}
+
+{% block inline_css %}
+{% endblock %}
+
+{% block layout %}
+page-template-default page is-singular not-scrolled
+{% endblock %}
+
+{% block header %}	
+	{% include '_includes/_header' %}
+{% endblock %}
+
+{% block content %}
+	{% set entry = craft.entries.slug(craft.app.request.getSegment(1)).one() %}
+	{% set mast = entry.pagesMast.one() %}
+	{% if mast %}
+	<div class="innerbanner" style="background-image:url({{ mast.url }});height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+	{% else %}
+	<div class="innerbanner" style="background-image:url(/assets/images/mast/bigstock-200537257-crop.jpg);height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+	{% endif %}
+		
+	<div id="content" class="site-content">
+		<main id="primary" class="content-area" role="main">
+				
+			<article id="post-343771" class="post-343771 page type-page status-publish hentry">
+				<div class="entry-inner">
+					<header class="entry-header">
+						<h1 class="entry-title">{{ entry.pagesTitle }}</h1>
+					</header>
+					<div class="entry-content">
+
+						<div id="breadcrumbs">
+							<span xmlns:v="http://rdf.data-vocabulary.org/#">
+								<span typeof="v:Breadcrumb">
+									<a href="/" rel="v:url" property="v:title">&nbsp;</a> › 
+									<span class="breadcrumb_last">{{ entry.pagesTitle }}</span>
+								</span>
+							</span>
+						</div>
+
+						<div id="custom_content">
+							<div id="accordion" class="custom_leftcol">
+								{% set hero = entry.pagesHero.one() %}
+								{% if hero %}
+								<p>
+									<img src="{{ hero.url }}" alt="" width="850" height="300" class="alignnone size-full">
+								</p>
+								{% endif %}
+
+								{{ entry.pagesMain }}
+								
+								{% set quote = craft.entries()
+									.section('quotes')
+									.limit(1)
+									.orderBy('RAND()')
+								%}
+								{% set quotesA = quote.all() %}
+								{% for quoteA in quotesA %}
+								<div class="contentblock" style="margin:0 0 30px 0; padding: 40px;">
+									<center>
+										<i>"{{ quoteA.quoteMain }}"</i>
+										<h5 style="margin-bottom:0;">{{ quoteA.quoteName }}, {{ quoteA.quoteLocation }}</h5>
+									</center>
+								</div>
+								{% endfor %}
+								
+								{% set relatedEntries = entry.pagesFaq.all() %}
+								{% if relatedEntries|length > 1 %}
+								{% for rel in relatedEntries %}
+								<h3>{{ rel.faqQuestion }}</h3>
+								{{ rel.faqAnswer }}
+								{% endfor %}
+								{% else %}
+								{% endif %}
+							</div>
+						</div>
+
+						<div class="custom_right_col_cont">
+							{% if entry.showSidebarEnroll %}
+							{% include '_includes/_sidebar-enroll' %}
+							{% endif %}
+							{% if entry.showSidebarOffer %}
+							{% include '_includes/_sidebar-offer' %}
+							{% endif %}
+						</div>
+
+					</div>
+				</div>
+			</article>
+				
+		</main>
+	</div>
+{% endblock %}
+
+{% block footer %}
+	{% include '_includes/_footer' %}
+{% endblock %}
+
+{% block scripts_includes %}
+	<!-- JS -->
+{% endblock %}
+
+{% block inline_scripts %}
+	{% if entry.showSidebarEnroll %}
+	{% include '_forms/_zipScriptFilter' %}
+	{% endif %}
+{% endblock %}

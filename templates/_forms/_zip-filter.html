@@ -1,0 +1,37 @@
+{% if craft.app.request.isAjax %}
+
+    {% set zip = craft.app.request.getParam('zip') %}
+
+    {% if zip %}
+        {% set zips = craft.entries.section('zipCodes').zipCode(zip) %}
+        {% if zips|length %}
+            {% for zip in zips.all() %}
+			<input type="hidden" id="city" name="city" value="{{ zip.city }}">
+			<input type="hidden" id="state" name="state" value="{{ zip.state }}">
+			{% set relatedEntries = zip.suppliers.all() %}
+			{% if relatedEntries|length > 1 %}
+			<label class="field select">
+				<select id="supno" name="supno"
+					data-rule-required="true" 
+					data-msg-required="Please select current service provider.">
+					<option value="">Service Provider</option>
+					{% for rel in relatedEntries %}
+					<option value="{{ rel.supplierCode }}">{{ rel.supplierName }}</option>
+					{% endfor %}
+				</select>
+				<i class="arrow double"></i>                    
+			</label>
+			<input type="hidden" id="sup_name" name="sup_name" value="">
+			{% else %}
+			{% for rel in relatedEntries %}
+			<input type="hidden" id="supnoh" name="supno" value="{{ rel.supplierCode }}" />
+			<input type="hidden" id="sup_name" name="sup_name" value="{{ rel.supplierName }}">
+			{% endfor %}
+			{% endif %}
+			{% endfor %}
+        {% else %}
+            {#<!--No contacts found with the zip {{ zip }}.-->#}
+        {% endif %}
+    {% endif %}
+
+{% endif %}

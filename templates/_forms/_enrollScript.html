@@ -1,0 +1,179 @@
+	<script type="text/javascript">
+		
+		jQuery(document).ready(function($){
+			
+			$("#smart-form").steps({
+				bodyTag: "fieldset",
+				headerTag: "h2",
+				bodyTag: "fieldset",
+				transitionEffect: "fade",
+				labels: {
+					finish: "Complete Enrollment",
+					next: "Save & Continue",
+					previous: "Go Back",
+					loading: "Loading..." 
+				},
+				onStepChanging: function (event, currentIndex, newIndex){
+					if (currentIndex > newIndex){return true; }
+					var form = $(this);
+					if (currentIndex < newIndex){}
+					return form.valid();
+				},
+				onStepChanged: function (event, currentIndex, priorIndex){
+					if(currentIndex == 1){
+						console.log("ok");
+						$('a[href$="#next"]').addClass("saveBtn");
+					};
+					if(currentIndex == 2){
+						$.ajax({
+							url: "/ajax",
+							success: 	function(result, success) {
+								alert("Saving!");
+							},
+							error: function(result, success) {
+								alert("Error!");
+							}
+						});
+					};
+				},
+				onFinishing: function (event, currentIndex){
+					var form = $(this);
+					form.validate().settings.ignore = ":disabled";
+					//return form.valid();
+				},
+				onFinished: function (event, currentIndex){
+					var form = $(this);
+				}
+			}).validate({
+				errorClass: "state-error",
+				validClass: "state-success",
+				errorElement: "em",
+				onkeyup: false,
+				onclick: false,
+				rules: {
+					first_name: {
+						required: true
+					},
+					last_name: {
+						required: true
+					},
+					email: {
+						required: true
+					},
+					main_phone: {
+						required: true,
+						number: true
+					},	
+					cell_phone: {
+						required: false,
+						number: true
+					},
+					eu_acct_no: {
+						required: true,
+						number: true
+					},
+					street_addr: {
+						required: true
+					},
+					city: {
+						required: true
+					},
+					state_abbr: {
+						required: true
+					},
+					postal: {
+						required: true,
+						number: true
+					},
+					generalTerms:{
+						required: true
+					}					
+				},
+				messages: {
+					first_name: {
+						required: "Please enter First Name"
+					},
+					last_name: {
+						required: "Please enter Last Name"
+					},
+					email: {
+						required: 'Please enter Email Address'
+					},
+					main_phone: {
+						required: 'Please enter Main Phone',
+						number: 'Please enter numbers only'
+					},
+					cell_phone: {
+						number: 'Please enter numbers only'
+					},
+					eu_acct_no: {
+						required: 'Please enter current utility account number',
+						number: 'Please enter numbers only'
+					},
+					street_addr: {
+						required: 'Please enter Street Address'
+					},
+					city: {
+						required: 'Please enter City'
+					},
+					state_abbr: {
+						required: 'Please enter State'
+					},
+					postal: {
+						required: 'Please enter Zip Code',
+						number: 'Please enter numbers only'
+					},
+					generalTerms:{
+						required: 'Please agree to our terms'
+					}					
+				},
+				highlight: function(element, errorClass, validClass) {
+					$(element).closest('.field').addClass(errorClass).removeClass(validClass);
+				},
+				unhighlight: function(element, errorClass, validClass) {
+					$(element).closest('.field').removeClass(errorClass).addClass(validClass);
+				},
+				errorPlacement: function(error, element) {
+					if (element.is(":radio") || element.is(":checkbox")) {
+						element.closest('.option-group').after(error);
+					} else {
+						error.insertAfter(element.parent());
+					}
+				}
+			
+			});
+			
+			$(".offer_go").each(function() {
+				$(this).on('click', function(e){
+					$(".offer_go").removeClass("btn-green").addClass("pushed").html("Select Plan");
+					$(this).addClass("btn-green").removeClass("pushed").html("<i class='fa fa-check'></i> Selected Plan");
+					$("#supno").val($(this).attr("data-supno"));
+					$("#rev_type").val($(this).attr("data-revtype"));
+					$("#campaign_code").val($(this).attr("data-campaign"));
+					if($(this).attr("data-green") == '100.00'){
+						$("#plan_goGreen").show();
+					} else {
+						$("#plan_goGreen").hide();
+					}
+					$("#price_code").val($(this).attr("data-pricec"));
+					$("#billExGo").attr("href", "/assets/images/statements/" + $(this).attr("data-supno") + ".jpg");
+					$("#billExV").attr("src", "/assets/images/statements/" + $(this).attr("data-supno") + ".jpg");
+					$("#plan_goSup").attr("src", "/assets/images/providers/" + $(this).attr("data-supno") + ".png");
+					//$("#plan_goTitle").html($(this).attr("data-desc"));
+					$("#plan_goPrice").html($(this).attr("data-pricekw"));
+					$("#plan_goGen").html($(this).attr("data-gen"));
+					$("#plan_goRate").html($(this).attr("data-rate"));
+					$("#plan_goReward").html($(this).attr("data-rewards"));
+					$("#plan_goEarly").html($(this).attr("data-early"));
+					$("#plan_alert").hide();
+					$("#plan_go").fadeIn();
+					$(".actions").fadeIn();
+					e.preventDefault();
+				});
+			});
+			
+			$(".billEx").colorbox({rel:'billEx', transition:"fade", height:"70%"});
+			//$(".termsEx").colorbox({iframe:true, transition:"fade", height:"70%"});
+			
+		}); 
+    </script>   

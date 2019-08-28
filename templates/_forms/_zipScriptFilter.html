@@ -1,0 +1,113 @@
+	<script type="text/javascript">
+		window.csrfTokenName = "{{ craft.app.config.general.csrfTokenName|e('js') }}";
+		window.csrfTokenValue = "{{ craft.app.request.csrfToken|e('js') }}";
+	</script>	
+
+	<script>
+		jQuery(document).ready(function(){		
+			//jQuery("#zip").mask('99999', {placeholder:'00000'});
+			
+			/*jQuery("#zip").keyup(function() {
+				var zip_in = jQuery(this);
+				var zip_box = jQuery('#zipbox');
+				
+				if (zip_in.val().length<5)
+				{
+					zip_box.removeClass('state-error state-success');
+				}
+				else if ( zip_in.val().length>5)
+				{
+					zip_box.addClass('state-error').removeClass('state-success');
+				}
+				else if ((zip_in.val().length == 5) ) 
+				{
+					// Make HTTP Request
+					jQuery.ajax({
+						url: 		"https://api.zippopotam.us/us/" + zip_in.val(),
+						cache: 		false,
+						dataType: 	"json",
+						type: 		"GET",
+					  	success: 	function(result, success) {
+							places = result['places'][0];
+							jQuery("#city").val(places['place name']);
+							jQuery("#state").val(places['state abbreviation']);
+							zip_box.addClass('state-success').removeClass('state-error');
+							//getQuotes();
+						},
+						error: function(result, success) {
+							zip_box.removeClass('state-success').addClass('state-error');
+						}
+					});
+				}
+			});*/
+			
+			jQuery("#zip").keyup(function(e) {
+				e.preventDefault();
+
+				var data = jQuery(this).serialize();
+				var url = jQuery("#enrollZip").attr('data-url');
+				
+				//data[csrfTokenName] = csrfTokenValue;
+
+				if (data.length = 5) {
+					jQuery.ajax({
+						url: 		url,
+						data: 		data,
+						type: 		"GET",
+						success: 	function(result, success) {
+							jQuery('#zipFilter').html(result);
+						},
+						error: function(result, success) {
+							//console.log("error");
+						}
+					});
+				}
+			});
+			
+			/*jQuery("#supno").on('change', function (e) {
+				var optionSelected = jQuery(this).text();
+				jQuery("#sup_name").val(jQuery(this).text());
+			});*/
+			
+			jQuery("#enrollZip").validate({
+            	errorClass: "state-error",
+				validClass: "state-success",
+				errorElement: "em",
+				rules: {
+					zip: {
+						required: true
+					},
+					supno: {
+						required: true
+					},
+					rev_type: {
+						required: true
+					}				
+				},
+				messages: {
+					zip: {
+						required: "Please enter Zip Code"
+					},
+					supno: {
+						required: "Please select Current Supplier"
+					},
+					rev_type: {
+						required: 'Please enter Service Type'
+					}					
+				},
+                highlight: function(element, errorClass, validClass) {
+                	jQuery(element).closest('.field').addClass(errorClass).removeClass(validClass);
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                	jQuery(element).closest('.field').removeClass(errorClass).addClass(validClass);
+                },
+                errorPlacement: function(error, element) {
+                	if (element.is(":radio") || element.is(":checkbox")) {
+                   		element.closest('.option-group').after(error);
+                    } else {
+                    	error.insertAfter(element.parent());
+                    }
+            	}	
+            });	
+		});
+	</script>

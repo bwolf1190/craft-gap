@@ -1,0 +1,146 @@
+										<div class="form-body smart-steps steps-theme-green theme-green">
+											<div class="frm-row">
+												<div class="colm colm9">
+													{% set form = craft.freeform.form("gapEnrollment") %}
+											
+													{{ form.renderTag({
+														id: "contact-info",
+														class: "wizard clearfix",
+														status: "servicePending",
+														returnUrl: "/enroll/residential-service-info/{{ submission.token }}"
+													}) }}
+														
+														<div class="steps clearfix">
+															<ul role="tablist">
+																<li role="tab" class="first done" aria-disabled="true" aria-selected="false">
+																	<a id="smart-form-t-0" href="#smart-form-h-0" aria-controls="smart-form-p-0">
+																		<span class="current-info audible">current step: </span><span class="number">1.</span> Select a Plan
+																	</a>
+																</li>
+																<li role="tab" class="current" aria-disabled="false" aria-selected="true">
+																	<a id="smart-form-t-1" href="#smart-form-h-1" aria-controls="smart-form-p-1">
+																		<span class="number">2.</span> Contact Info
+																	</a>
+																</li>
+																<li role="tab" class="disabled" aria-disabled="true" aria-selected="false">
+																	<a id="smart-form-t-2" href="#smart-form-h-2" aria-controls="smart-form-p-2">
+																		<span class="number">3.</span> Service Info
+																	</a>
+																</li>
+																<li role="tab" class="disabled last" aria-disabled="true" aria-selected="false">
+																	<a id="smart-form-t-3" href="#smart-form-h-3" aria-controls="smart-form-p-3">
+																		<span class="number">4.</span> Complete
+																	</a>
+																</li>
+															</ul>
+														</div>
+														
+														<div class="content clearfix">
+														
+															<input type="hidden" id="eai_trnno" name="eai_trnno" value="{{ eaiGo }}">
+															<input type="hidden" id="gap_uu" name="gap_uu" value="{{ randomGapU }}user">
+															<input type="hidden" id="gap_ue" name="gap_ue" value="{{ randomGapU }}@greatamericanpower.com">
+															<input type="hidden" id="city" name="city" value="{{ cityGo }}">
+															<input type="hidden" id="state_abbr" name="state_abbr" value="{{ stateGo }}">
+															<input type="hidden" id="postal" name="postal" value="{{ zipGo }}">
+															<input type="hidden" id="supno" name="supno" value="{{ supnoGo }}">
+															<input type="hidden" id="supname" name="supname" value="{{ supnameGo }}">
+															<input type="hidden" id="price_code" name="price_code" value="{{ price_codeGo }}">
+															<input type="hidden" id="rev_type" name="rev_type" value="{{ rev_typeGo }}">
+															<input type="hidden" id="utility_type" name="utility_type" value="{{ utility_typeGo }}">
+															<input type="hidden" id="campaign_code" name="campaign_code" value="{{ campaign_codeGo }}">
+															<input type="hidden" id="referral_id" name="referral_id" value="{{ referral_idGo }}">
+															
+															<input type="hidden" id="offer" name="offer" value="{{ offerGo }}">
+															<input type="hidden" id="pricekw" name="pricekw" value="{{ pricekwGo }}">
+															<input type="hidden" id="green" name="green" value="{{ greenGo }}">
+															<input type="hidden" id="gen" name="gen" value="{{ genGo }}">
+															<input type="hidden" id="rate" name="rate" value="{{ rateGo }}">
+															<input type="hidden" id="rewards" name="rewards" value="{{ rewardsGo }}">
+															<input type="hidden" id="early" name="early" value="{{ earlyGo }}">
+
+															<fieldset>
+																<div class="spacer-t30 spacer-b30">
+																	<div class="tagline"><span>Contact Information</span></div>
+																</div>
+																<div class="section">
+																	<p class="fine-grey">Please enter your current contact information. </p>
+																</div>
+																<div class="frm-row">
+																	<div class="section colm colm12">
+																		<label class="field prepend-icon">
+																			<input type="text" name="first_name" id="first_name" class="gui-input" placeholder="First Name">
+																			<span class="field-icon"><i class="fa fa-user"></i></span>  
+																		</label>
+																	</div>
+																</div>
+																<div class="frm-row">
+																	<div class="section colm colm12">
+																		<label class="field prepend-icon">
+																			<input type="text" name="last_name" id="last_name" class="gui-input" placeholder="Last Name">
+																			<span class="field-icon"><i class="fa fa-user"></i></span>  
+																		</label>
+																	</div>
+																</div>
+																<div class="frm-row">
+																	<div class="section colm colm12">
+																		<label class="field prepend-icon">
+																			<input type="email" name="email" id="email" class="gui-input" placeholder="Email Address">
+																			<span class="field-icon"><i class="fa fa-envelope"></i></span>  
+																		</label>
+																	</div>
+																</div>
+															</fieldset>
+														</div>
+														
+														<div class="actions clearfix" style="display: block;">
+															<ul role="menu" aria-label="Pagination">
+																<li aria-hidden="false" aria-disabled="false">
+																	<button type="submit" class="button btn-green">Save &amp; Continue</button>
+																</li>
+															</ul>
+														</div>
+													{{ form.renderClosingTag }}
+													
+													<div class="spacer-t40">
+														{{ entry.pagesMain }}
+													</div>
+												</div>
+												
+												<div class="colm colm3">
+													<div class="frm-row">
+														<div class="colm colm12">
+															<h3 class="plan_guide">Your Selected Plan:</h3>
+															<div class="section">
+																<div id="plan_alert" class="notification alert-info spacer-t10" style="display: none;">
+																	<p style="padding-bottom:0;">Please select a service plan. </p>
+																</div>
+																<div id="plan_go" class="price-box">
+																	{% if greenGo == '100.00' %}
+																	<div id="plan_goGreen" class="ribbon" style="display:none;">
+																		<div class="ribbon-inner"><i class="fa fa-leaf"></i></div>
+																	</div>
+																	{% endif %}
+																	<h2 style="text-transform: none;">$<span id="plan_goPrice">{{ pricekwGo }}</span> / kWh</h2>
+																	<div class="plan_provider">
+																		{#<!-- <img id="plan_goSup" src="/assets/images/providers/{{ supnoGo }}.png"/> -->#}
+																		<img id="plan_goSup" src="/assets/images/providers/GAP.png"/>
+																	</div>
+																	<p id="plan_supnameGo" class="spacer-t20 spacer-b10" style="font-size: 15px; color: #666;">{{ supnameGo }}</p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-bolt fa-lg"></i> <span id="plan_goGen">{{ genGo }}</span></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-chart-bar fa-lg"></i> <span id="plan_goRate">{{ rateGo }}</span></p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-shopping-bag fa-lg"></i> <span id="plan_goReward"></span>{{ rewardsGo }}</p>
+																	<div class="spacer spacer-t10 spacer-b10"></div>
+																	<p class=""><i class="fas fa-door-open fa-lg"></i> <span id="plan_goEarly">{{ earlyGo }}</span></p>
+																</div>
+																
+																{% include '_includes/_sidebar-support' %}
+															</div>
+														</div>
+													</div> 
+												</div>
+											</div>
+										</div>	

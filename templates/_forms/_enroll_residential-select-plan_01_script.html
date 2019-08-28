@@ -1,0 +1,93 @@
+	<script type="text/javascript">
+		
+		jQuery(document).ready(function($){
+			
+			$("#select-plan").validate({
+				errorClass: "state-error",
+				validClass: "state-success",
+				errorElement: "em",
+				onkeyup: false,
+				onclick: false,
+				rules: {
+					city: {
+						required: true
+					},
+					state_abbr: {
+						required: true
+					},
+					postal: {
+						required: true,
+						number: true
+					}					
+				},
+				messages: {
+					city: {
+						required: 'Please enter City'
+					},
+					state_abbr: {
+						required: 'Please enter State'
+					},
+					postal: {
+						required: 'Please enter Zip Code',
+						number: 'Please enter numbers only'
+					}					
+				},
+				highlight: function(element, errorClass, validClass) {
+					$(element).closest('.field').addClass(errorClass).removeClass(validClass);
+				},
+				unhighlight: function(element, errorClass, validClass) {
+					$(element).closest('.field').removeClass(errorClass).addClass(validClass);
+				},
+				errorPlacement: function(error, element) {
+					if (element.is(":radio") || element.is(":checkbox")) {
+						element.closest('.option-group').after(error);
+					} else {
+						error.insertAfter(element.parent());
+					}
+				}
+			
+			});
+			
+			$(".planSelected").prop("disabled",true);
+			
+			$(".offer_go").each(function() {
+				$(this).on('click', function(e){
+					$(".offer_go").removeClass("btn-green").addClass("pushed").html("Select Plan");
+					$(this).addClass("btn-green").removeClass("pushed").html("<i class='fa fa-check'></i> Selected Plan");
+					$(".planSelected").prop("disabled",false);
+					$("#supno").val($(this).attr("data-supno"));
+					$("#rev_type").val($(this).attr("data-revtype"));
+					$("#campaign_code").val($(this).attr("data-campaign"));
+					if($(this).attr("data-green") == '100.00'){
+						$("#plan_goGreen").show();
+					} else {
+						$("#plan_goGreen").hide();
+					}
+					$("#billExGo").attr("href", "/assets/images/statements/" + $(this).attr("data-supno") + ".jpg");
+					$("#billExV").attr("src", "/assets/images/statements/" + $(this).attr("data-supno") + ".jpg");
+					//$("#plan_goSup").attr("src", "/assets/images/providers/" + $(this).attr("data-supno") + ".png");
+					$("#plan_goSup").attr("src", "/assets/images/providers/GAP.png");
+					$("#price_code").val($(this).attr("data-pricec"));
+					$("#offer").val($(this).attr("data-desc"));
+					$("#plan_supnameGo").html($(this).attr("data-supname"));
+					$("#supname").val($(this).attr("data-supname"));
+					$("#plan_goPrice").html($(this).attr("data-pricekw"));
+					$("#pricekw").val($(this).attr("data-pricekw"));
+					$("#plan_goGen").html($(this).attr("data-gen"));
+					$("#gen").val($(this).attr("data-gen"));
+					$("#green").val($(this).attr("data-green"));
+					$("#plan_goRate").html($(this).attr("data-rate"));
+					$("#rate").val($(this).attr("data-rate"));
+					$("#plan_goReward").html($(this).attr("data-rewards"));
+					$("#rewards").val($(this).attr("data-rewards"));
+					$("#plan_goEarly").html($(this).attr("data-early"));
+					$("#early").val($(this).attr("data-early"));
+					$("#plan_alert").hide();
+					$("#plan_go").fadeIn();
+					$(".actions").fadeIn();
+					e.preventDefault();
+				});
+			});
+			
+		}); 
+    </script>  

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+	<head>
+       	
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+        {% block meta %}
+        {% endblock %}
+		
+		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/icons/apple-touch-icon-57x57.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/icons/apple-touch-icon-114x114.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/icons/apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/icons/apple-touch-icon-144x144.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/assets/icons/apple-touch-icon-60x60.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/assets/icons/apple-touch-icon-120x120.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/assets/icons/apple-touch-icon-76x76.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/icons/apple-touch-icon-152x152.png" />
+		<link rel="icon" type="image/png" href="/assets/icons/favicon-196x196.png" sizes="196x196" />
+		<link rel="icon" type="image/png" href="/assets/icons/favicon-96x96.png" sizes="96x96" />
+		<link rel="icon" type="image/png" href="/assets/icons/favicon-32x32.png" sizes="32x32" />
+		<link rel="icon" type="image/png" href="/assets/icons/favicon-16x16.png" sizes="16x16" />
+		<link rel="icon" type="image/png" href="/assets/icons/favicon-128.png" sizes="128x128" />
+		<meta name="application-name" content="&nbsp;"/>
+		<meta name="msapplication-TileColor" content="#FFFFFF" />
+		<meta name="msapplication-TileImage" content="/assets/icons/mstile-144x144.png" />
+		<meta name="msapplication-square70x70logo" content="/assets/icons/mstile-70x70.png" />
+		<meta name="msapplication-square150x150logo" content="/assets/icons/mstile-150x150.png" />
+		<meta name="msapplication-wide310x150logo" content="/assets/icons/mstile-310x150.png" />
+		<meta name="msapplication-square310x310logo" content="/assets/icons/mstile-310x310.png" />
+
+		<link rel="stylesheet" href="/assets/css/legacy/genericons.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato%3A400%2C400italic%2C700%2C700italic%7CNoto+Serif%3A400%2C400italic%2C700%2C700italic&#038;subset=latin%2Clatin-ext" type="text/css" media="all"/>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" type="text/css" media="all"/>
+		<link rel="stylesheet" href="/assets/css/legacy/style.css" type="text/css" media="all"/>
+		<link rel="stylesheet" href="/assets/css/forms/smart-forms.css" type="text/css">
+		<link rel="stylesheet" href="/assets/css/forms/smart-addons.css" type="text/css">
+		<link rel="stylesheet" href="/assets/css/forms/smart-themes/green.css" type="text/css">
+		<link rel="stylesheet" href="/assets/css/colorbox/colorbox.css" type="text/css">
+		<link rel="stylesheet" href="/assets/css/custom.css" type="text/css">
+		
+		<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" href="/assets/css/forms/smart-forms-ie8.css">
+		<![endif]-->
+		
+		<script type="text/javascript" src="/assets/js/legacy/jquery.js"></script>
+		<script type="text/javascript" src="/assets/js/legacy/jquery-migrate.min.js"></script>
+
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		
+        {% block inline_css %}
+        {% endblock %}
+		
+		<!-- Global site tag (gtag.js) - Google Ads: 805763820 -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=AW-805763820"></script>
+		<script>
+			window.dataLayer = window.dataLayer || []; 
+			function gtag(){
+				dataLayer.push(arguments);
+			} 
+			gtag('js', new Date()); 
+			// New
+			gtag('config', 'AW-805763820');
+			// Legacy
+			gtag('config', 'UA-117110415-1' );
+		</script> 
+		
+		{% if craft.app.request.getSegment(1) == "enroll" and craft.app.request.getSegment(2) != "" %}
+		<script> gtag('config', 'AW-805763820/hzQHCODhtpABEOz1m4AD', { 'phone_conversion_number': '1-877-383-9787' }); </script>
+		{% endif %}
+        
+    </head>
+
+	<body class="{% block layout %}{% endblock %}">
+		<div id="page" class="hfeed site">
+			
+			{% block header %}
+			{% endblock %}
+			
+			<div class="site-inner">
+
+				{% block content %}
+				{% endblock %}
+				
+			</div>
+			
+			{% block footer %}
+			{% endblock %}
+			
+		</div>
+		
+		<div class="loaderGo" style="display: none;">
+			<div class="loaderMsg">
+				<h3 class="loaderTxt"></h3>
+				<span class="loaderInd" style="color:#bf0000;"><i class="fa-2x fas fa-circle-notch fa-spin"></i></span>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="/assets/js/legacy/imagesloaded.min.js"></script>
+		<script type="text/javascript" src="/assets/js/legacy/navigation.js"></script>
+		<script type="text/javascript" src="/assets/js/legacy/skip-link-focus-fix.js"></script>
+		<script type="text/javascript" src="/assets/js/legacy/masonry.min.js"></script>
+		<script type="text/javascript" src="/assets/js/legacy/global.js"></script>
+		<script type="text/javascript" src="/assets/js/legacy/wp-embed.min.js"></script>
+		
+		<script type="text/javascript" src="/assets/js/forms/jquery.steps.min.js"></script>
+		<script type="text/javascript" src="/assets/js/forms/jquery-ui-custom.min.js"></script>
+		<script type="text/javascript" src="/assets/js/forms/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="/assets/js/forms/jquery.maskedinput.js"></script>
+		<script type="text/javascript" src="/assets/js/forms/additional-methods.min.js"></script>
+		<script type="text/javascript" src="/assets/js/forms/jquery-ui-slider-pips.min.js"></script>
+		<script type="text/javascript" src="/assets/js/forms/jquery-ui-touch-punch.min.js"></script>
+		<script type="text/javascript" src="/assets/js/forms/jquery.formShowHide.min.js"></script>   
+		<script type="text/javascript" src="/assets/js/colorbox/jquery.colorbox-min.js"></script>
+		
+		<!--[if lte IE 9]>
+        <script type="text/javascript" src="/assets/js/forms/jquery.placeholder.min.js"></script>
+    	<![endif]--> 
+
+		<!-- Retargeting Pixel - Tapsomnia - DO NOT MODIFY -->
+		{# <img src="https://post.tapsomnia.com/usr/?seg=5&sspid=1"/> #}
+		<!-- End of Retargeting Pixel -->
+		
+		{% block scripts_includes %}
+		{% endblock %}
+
+		{% block inline_scripts %}
+		{% endblock %}
+		
+		<script type="text/javascript" src="//cdn.callrail.com/companies/430442494/32fe0ed1cda65de583da/12/swap.js"></script> 
+		
+    </body>
+</html>

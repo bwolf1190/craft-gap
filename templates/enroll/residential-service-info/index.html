@@ -1,0 +1,80 @@
+{% extends "_layout" %}
+
+{% block meta %}
+	{% set seoGo = craft.entries.section('enroll').id('2838').one() %}
+	{% set seo = seoGo.seo %}
+	{% hook 'seo' %}
+{% endblock %}
+
+{% block inline_css %}
+	<!-- INLINE CSS -->
+{% endblock %}
+
+{% block layout %}
+page-template-default page is-singular not-scrolled
+{% endblock %}
+
+{% block header %}	
+	{% include '_includes/_header' %}
+{% endblock %}
+
+{% block content %}
+	{% set entry = craft.entries.section('enroll').id('2838').one() %}
+	{% set mast = entry.pagesMast.one() %}
+	{% if mast %}
+	<div class="innerbanner" style="background-image:url({{ mast.url }});height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+	{% else %}
+	<div class="innerbanner" style="background-image:url(/assets/images/mast/bigstock-200537257-crop.jpg);height: 159px; width: 100%; background-position: center 79%; background-size: 100%; position: absolute;"></div>
+	{% endif %}
+		
+	<div id="content" class="site-content">
+		<main id="primary" class="content-area" role="main">
+			<article id="post-343771" class="post-343771 page type-page status-publish hentry">
+				<div class="entry-inner">
+					<header class="entry-header">
+						<h1 class="entry-title">{{ entry.pagesTitle }}</h1>
+					</header>
+					<div class="entry-content">
+
+						<div id="breadcrumbs">
+							<span xmlns:v="http://rdf.data-vocabulary.org/#">
+								<span typeof="v:Breadcrumb">
+									<a href="https://www.greatamericanpower.com/" rel="v:url" property="v:title">&nbsp;</a> › 
+									<span class="">Enroll</span> › 
+									<span class="breadcrumb_last">{{ entry.title }}</span>
+								</span>
+							</span>
+						</div>
+
+						<div id="custom_content">
+							<div class="col-md-12">
+								<div class="smart-wrap">
+									<div class="smart-forms smart-container wrap-1">
+										{% if currentUser %}
+										{% include '_forms/_enroll_residential-service-info_03' %}
+										{% else %}
+										{% redirect "/enroll/" %}
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+		</main>
+	</div>
+
+{% endblock %}
+
+{% block footer %}
+	{% include '_includes/_footer' %}
+{% endblock %}
+
+{% block scripts_includes %}
+	<!-- JS -->
+{% endblock %}
+
+{% block inline_scripts %}
+	{% include '_forms/_enroll_residential-service-info_03_script' %}
+{% endblock %}
