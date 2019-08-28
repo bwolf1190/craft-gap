@@ -1,8 +1,61 @@
-<form action="http://localhost:8080/actions/signup/enrollment" method="post">
-	{{ csrfInput() }}
-  	First name:<br>
-  	<input type="text" name="firstname" value="Mickey"><br>
-  	Last name:<br>
-  	<input type="text" name="lastname" value="Mouse"><br><br>
-  	<input type="submit" value="Submit">
-</form>
+								
+
+<div class="theme-green">
+	<form method="post" action="/actions/signup/enrollment" id="enrollZipcode">
+		
+		{{ csrfInput() }}
+		
+		<div class="form-body">
+			<div class="frm-row">
+				<div class="colm colm12">
+					<div class="section">
+						<div id="plan_alert" class="notification alert-info spacer-t10">
+							<p style="padding-bottom:0;"> Enter Your Zip Code to Get Started </p>
+						</div>
+					</div>
+					
+					<div class="section align-left">
+						<label id="zipbox" class="field">
+							<input type="text" name="zip" id="zip" class="form-control gui-input"
+								data-rule-required="true" 
+								data-msg-required="Please enter a US zip code." 
+								data-rule-zipcodeUS="true" 
+								data-msg-zipcodeUS="Please enter a valid US zip code."
+								placeholder="Zip Code"
+								value="">
+						</label>
+					</div>
+					<div class="section align-right">
+						<label id="promobox" class="field">
+							<input type="text" name="proo" id="promo" class="form-control gui-input"
+								data-rule-required="true" 
+								data-msg-required="Enter your promo code (optional)." 
+								placeholder="Promo Code"
+								value="">
+						</label>
+					</div>
+					
+					<div id="zipFilter" class="section align-left">
+					</div>
+
+					<div class="section align-left">
+						<label class="field select">
+							<select id="rev_type" name="rev_type"
+								data-rule-required="true" 
+								data-msg-required="Please select a service type.">
+								<option value="">Service Type</option>
+								<option value="Residential">Residential</option>
+								<option value="Commercial">Commercial</option>
+							</select>
+							<i class="arrow double"></i>                    
+						</label>  
+					</div>
+					
+					<div class="section">
+						<button type="submit" class="button block full-width btn-green"> Next </button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

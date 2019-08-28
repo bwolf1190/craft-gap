@@ -1,0 +1,43 @@
+{
+    "name": "wolff/signup",
+    "description": "Sign customers up.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "signup"
+    ],
+    "support": {
+        "docs": "???",
+        "issues": "???"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brett Wolverton",
+            "homepage": "brett.a.wolverton@gmail.com"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "wolff\\signup\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Signup",
+        "handle": "signup",
+        "hasCpSettings": true,
+        "hasCpSection": true,
+        "changelogUrl": "???",
+        "components": {
+            "signupService": "wolff\\signup\\services\\SignupService"
+        },
+        "class": "wolff\\signup\\Signup"
+    }
+}

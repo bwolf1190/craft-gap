@@ -19,5 +19,5 @@
  */
 
 return [
-	
+	'enter-zip-code' => ['template' => 'test/_form']
 ];

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cadc7169cd2d5c8ea7560e056fecffb0",
+    "content-hash": "80a8d55dea3181c28109c55cd051e012",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -3386,6 +3386,56 @@
                 "graphql"
             ],
             "time": "2018-09-02T14:59:54+00:00"
+        },
+        {
+            "name": "wolff/signup",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "plugins/signup",
+                "reference": "f9116f7f6d293966a8858fcecd158b22b2b85d26"
+            },
+            "require": {
+                "craftcms/cms": "^3.0.0-RC1"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "name": "Signup",
+                "handle": "signup",
+                "hasCpSettings": true,
+                "hasCpSection": true,
+                "changelogUrl": "???",
+                "components": {
+                    "signupService": "wolff\\signup\\services\\SignupService"
+                },
+                "class": "wolff\\signup\\Signup"
+            },
+            "autoload": {
+                "psr-4": {
+                    "wolff\\signup\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brett Wolverton",
+                    "homepage": "brett.a.wolverton@gmail.com"
+                }
+            ],
+            "description": "Sign customers up.",
+            "keywords": [
+                "cms",
+                "craft",
+                "craft-plugin",
+                "craftcms",
+                "signup"
+            ],
+            "support": {
+                "docs": "???",
+                "issues": "???"
+            }
         },
         {
             "name": "yii2tech/ar-softdelete",

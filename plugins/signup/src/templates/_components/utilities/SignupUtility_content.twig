@@ -1,0 +1,24 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Signup plugin for Craft CMS
+ *
+ * SignupUtility Utility Content
+ *
+ * @author    Brett Wolverton
+ * @copyright Copyright (c) 2019 Brett Wolverton
+ * @link      brett.a.wolverton@gmail.com
+ * @package   Signup
+ * @since     1.0.0
+ */
+#}
+
+<h1>SignupUtility</h1>
+
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@wolff/signup/assetbundles/signuputilityutility/dist', true) ~ '/img/SignupUtility-icon.svg' %}
+
+<img src="{{ iconUrl }}" height="64" width="64" />
+
+<p>Your Utility content goes here</p>
+
+<p>{{ someVar }}</p>

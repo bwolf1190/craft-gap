@@ -19,31 +19,10 @@
 
 return [
 
-    'modules' => [
+   /* 'modules' => [
         'signup-module' => [
             'class' => \modules\signupmodule\SignupModule::class,
         ],
     ],
-    'bootstrap' => ['signup-module'],
-    /*'*'       => [
-        'modules'   => [
-            'site-module' => [
-                'class' => \modules\setupmodule\SetupModule::class,
-            ],
-        ],
-        //'bootstrap' => ['setup-module'],
-    ],
-
-    // Live (production) environment
-    'live'    => [
-    ],
-
-    // Staging (pre-production) environment
-    'staging' => [
-    ],
-
-    // Local (development) environment
-    'local'   => [
-    ],
-    //'bootstrap' => ['my-module'],*/
+    'bootstrap' => ['signup-module'],*/
 ];

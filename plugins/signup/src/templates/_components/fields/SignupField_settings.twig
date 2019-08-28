@@ -1,0 +1,26 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Signup plugin for Craft CMS
+ *
+ * SignupField Field Settings
+ *
+ * @author    Brett Wolverton
+ * @copyright Copyright (c) 2019 Brett Wolverton
+ * @link      brett.a.wolverton@gmail.com
+ * @package   Signup
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("wolff\\signup\\assetbundles\\signup\\SignupAsset") %}
+
+{{ forms.textField({
+    label: 'Some Attribute',
+    instructions: 'Enter some attribute here.',
+    id: 'someAttribute',
+    name: 'someAttribute',
+    value: field['someAttribute']})
+}}
